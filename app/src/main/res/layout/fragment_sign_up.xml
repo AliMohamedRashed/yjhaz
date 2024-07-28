@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/yahjz_background"
+    tools:context=".presentation.SignUpFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/fragment_signup_iv_logo"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:contentDescription="@string/yajha"
+                android:src="@drawable/yajhz_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/fragment_signup_v_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/rounded_top_corners"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_iv_logo" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_signup_tv_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/sign_up"
+                android:textAlignment="center"
+
+                android:textAllCaps="true"
+                android:textColor="@color/upper_fields_color"
+                android:textSize="@dimen/_19sdp"
+                android:textFontWeight="600"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_v_view"
+                app:layout_constraintTop_toTopOf="@+id/fragment_signup_v_view"
+                tools:ignore="TextSizeCheck" />
+
+
+            <!--Name Fields-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_signup_tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:letterSpacing="0.0001"
+                android:text="@string/name"
+                android:textAlignment="center"
+                android:textColor="@color/upper_fields_color"
+                android:textFontWeight="500"
+                android:textSize="@dimen/tv_size"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_v_view"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_tv_signup"
+                tools:ignore="TextSizeCheck" />
+            <EditText
+                android:id="@+id/fragment_signup_et_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:autofillHints=""
+                android:background="@drawable/custom_edit_text_input"
+                android:ems="10"
+                android:fontFamily="@font/tt_commons_regular"
+                android:hint="@string/write_14_character"
+                android:inputType="textPersonName"
+                android:padding="@dimen/_13sdp"
+                android:textColorHint="@color/lower_fields_color"
+                android:textSize="@dimen/_13sdp"
+                android:textFontWeight="300"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_signup_v_view"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_v_view"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_tv_name"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+            <!--Email Fields-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_signup_tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/email"
+                android:textFontWeight="500"
+                android:letterSpacing="0.0001"
+                android:textAlignment="center"
+                android:textColor="@color/upper_fields_color"
+                android:textSize="@dimen/tv_size"            app:layout_constraintStart_toStartOf="@+id/fragment_signup_tv_name"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_et_name"
+                tools:ignore="TextSizeCheck" />
+            <EditText
+                android:id="@+id/fragment_signup_et_email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:autofillHints=""
+                android:background="@drawable/custom_edit_text_input"
+                android:ems="10"
+                android:fontFamily="@font/tt_commons_regular"
+                android:hint="@string/write_yout_email"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/_13sdp"
+                android:textColorHint="@color/lower_fields_color"
+                android:textSize="@dimen/_13sdp"
+                android:textFontWeight="300"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_signup_et_name"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_et_name"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_tv_email"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+            <!--Phone Number Fields-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_signup_tv_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/phone_number"
+                android:textFontWeight="500"
+                android:textAlignment="center"
+                android:textColor="@color/upper_fields_color"
+                android:textSize="@dimen/tv_size"            app:layout_constraintStart_toStartOf="@+id/fragment_signup_tv_name"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_et_email"
+                tools:ignore="TextSizeCheck" />
+            <EditText
+                android:id="@+id/fragment_signup_et_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:autofillHints=""
+                android:background="@drawable/custom_edit_text_input"
+                android:ems="10"
+                android:fontFamily="@font/tt_commons_regular"
+                android:hint="@string/write_11_numbers"
+                android:inputType="number|phone"
+                android:padding="@dimen/_13sdp"
+                android:textColorHint="@color/lower_fields_color"
+                android:textSize="@dimen/_13sdp"
+                android:textFontWeight="300"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_signup_et_email"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_et_email"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_tv_phone_number"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+            <!--Password Fields-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_signup_tv_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/password"
+                android:textFontWeight="500"
+                android:textAlignment="center"
+                android:letterSpacing="0.0001"
+                android:textColor="@color/upper_fields_color"
+                android:textSize="@dimen/tv_size"            app:layout_constraintStart_toStartOf="@+id/fragment_signup_tv_name"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_et_phone_number"
+                tools:ignore="TextSizeCheck" />
+            <EditText
+                android:id="@+id/fragment_signup_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:autofillHints=""
+                android:background="@drawable/custom_edit_text_input"
+                android:ems="10"
+                android:fontFamily="@font/tt_commons_regular"
+                android:hint="@string/write_8_character_at_least"
+                android:inputType="textPassword"
+                android:padding="@dimen/_13sdp"
+                android:textColorHint="@color/lower_fields_color"
+                android:textSize="@dimen/_13sdp"
+                android:textFontWeight="300"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_signup_et_phone_number"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_et_phone_number"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_tv_password"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+            <!--Confirm Password Fields-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_signup_tv_confirm_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/confirm_Password"
+                android:textAlignment="center"
+                android:letterSpacing="0.0001"
+                android:textColor="@color/upper_fields_color"
+                android:textFontWeight="500"
+                android:textSize="@dimen/tv_size"            app:layout_constraintStart_toStartOf="@+id/fragment_signup_tv_name"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_et_password"
+                tools:ignore="TextSizeCheck" />
+
+            <!--Sign up Button-->
+            <EditText
+                android:id="@+id/fragment_signup_et_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_44sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:autofillHints=""
+                android:background="@drawable/custom_edit_text_input"
+                android:ems="10"
+                android:fontFamily="@font/tt_commons_regular"
+                android:hint="@string/write_your_password_again"
+                android:inputType="textPassword"
+                android:padding="@dimen/_13sdp"
+                android:textColorHint="@color/lower_fields_color"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_signup_et_password"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_et_password"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_tv_confirm_password"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_signup_btn_signup"
+                style="@style/button_style"
+                android:letterSpacing="0.0001"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_54sdp"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:text="@string/sign_up"
+                android:textSize="@dimen/_17sdp"
+                android:textFontWeight="500"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_signup_et_confirm_password"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_et_confirm_password"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_et_confirm_password"
+                tools:ignore="TextSizeCheck" />
+
+            <!--Have An Account Field Button-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_signup_tv_dont_have_an_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="110dp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_22sdp"
+
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/dont_have_acount"
+                android:textColor="@color/upper_fields_color"
+                android:textFontWeight="400"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_signup_v_view"
+                app:layout_constraintStart_toStartOf="@+id/fragment_signup_v_view"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_btn_signup"
+                tools:ignore="TextSizeCheck" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_signup_tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_22sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/log_in"
+                android:textColor="@color/small_login_color"
+                android:textFontWeight="600"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_signup_v_view"
+                app:layout_constraintStart_toEndOf="@+id/fragment_signup_tv_dont_have_an_account"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_signup_btn_signup"
+                app:layout_constraintVertical_bias="1.0"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</FrameLayout>

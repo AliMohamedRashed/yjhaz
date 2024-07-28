@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_118sdp"
+    android:layout_height="@dimen/_99sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_14sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardElevation="0dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/custom_category_iv"
+            android:layout_width="@dimen/_82sdp"
+            android:layout_height="@dimen/_82sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_gravity="top|end"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/custom_category_tv_cat_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_gravity="bottom"
+            android:textColor="@color/upper_fields_color"
+            android:letterSpacing="-0.01"
+            android:textSize="@dimen/_10ssp"
+            android:fontFamily="@font/tt_commons_regular"
+            android:textStyle="normal"/>
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>

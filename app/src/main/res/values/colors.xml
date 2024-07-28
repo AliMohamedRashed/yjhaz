@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="upper_fields_color">#484848</color>
+    <color name="lower_fields_color">#B3B3B3</color>
+    <color name="button_color">#00957B</color>
+    <color name="home_items_color">#FFD279</color>
+    <color name="small_login_color">#BA935C</color>
+    <color name="forgot_password_color">#9C9C9C</color>
+    <color name="search_hint_color">#C4C4C4</color>
+    <color name="shadow_color">#48484880</color>
+    <color name="popular_now_color">#FCEFCE</color>
+</resources>

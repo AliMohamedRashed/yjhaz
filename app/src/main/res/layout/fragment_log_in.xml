@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/yahjz_background"
+    tools:context=".presentation.LogInFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/fragment_login_iv_logo"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:src="@drawable/yajhz_logo"
+                android:layout_marginTop="@dimen/_156sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/yajha"/>
+
+            <View
+                android:id="@+id/fragment_login_v_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/rounded_top_corners"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/_70sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_iv_logo" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_login_tv_log_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/log_in"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/upper_fields_color"
+                android:textSize="@dimen/_19sdp"
+                android:textFontWeight="600"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/fragment_login_v_view"
+                app:layout_constraintTop_toTopOf="@+id/fragment_login_v_view"
+                tools:ignore="TextSizeCheck" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_login_tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_44sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/email"
+                android:textFontWeight="500"
+                android:textAlignment="center"
+                android:textColor="@color/upper_fields_color"
+                android:textSize="@dimen/tv_size"            app:layout_constraintStart_toStartOf="@+id/fragment_login_v_view"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_log_in"
+                tools:ignore="TextSizeCheck" />
+
+            <EditText
+                android:id="@+id/fragment_login_et_email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:autofillHints=""
+                android:background="@drawable/custom_edit_text_input"
+                android:ems="10"
+                android:fontFamily="@font/tt_commons_regular"
+                android:hint="@string/write_yout_email"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/_13sdp"
+                android:textColorHint="@color/lower_fields_color"
+                android:textSize="@dimen/_13sdp"
+                android:textFontWeight="300"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_login_v_view"
+                app:layout_constraintStart_toStartOf="@+id/fragment_login_v_view"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_email"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_login_tv_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_11sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/password"
+                android:textFontWeight="500"
+                android:textAlignment="center"
+                android:textColor="@color/upper_fields_color"
+                android:textSize="@dimen/tv_size"            app:layout_constraintStart_toStartOf="@+id/fragment_login_tv_email"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_et_email"
+                tools:ignore="TextSizeCheck" />
+
+            <EditText
+                android:id="@+id/fragment_login_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_33sdp"
+                android:autofillHints=""
+                android:background="@drawable/custom_edit_text_input"
+                android:ems="10"
+                android:fontFamily="@font/tt_commons_regular"
+                android:hint="@string/write_8_character_at_least"
+                android:inputType="textPassword"
+                android:padding="@dimen/_13sdp"
+                android:textColorHint="@color/lower_fields_color"
+                android:textSize="@dimen/_13sdp"
+                android:textFontWeight="300"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_login_et_email"
+                app:layout_constraintStart_toStartOf="@+id/fragment_login_et_email"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_et_email"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_login_tv_forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/forgot_password"
+                android:textColor="@color/forgot_password_color"
+                android:textSize="@dimen/_12sdp"
+                android:textFontWeight="400"
+                app:layout_constraintStart_toStartOf="@+id/fragment_login_tv_password"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_et_password"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_login_btn_log_in"
+                style="@style/button_style"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_54sdp"
+                android:layout_marginTop="@dimen/_55sdp"
+                android:text="@string/log_in"
+                android:textSize="@dimen/_17sdp"
+                android:letterSpacing="0.0001"
+                app:layout_constraintEnd_toEndOf="@+id/fragment_login_et_password"
+                app:layout_constraintStart_toStartOf="@+id/fragment_login_et_password"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_et_password"
+                tools:ignore="TextSizeCheck" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_login_tv_dont_have_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="128dp"
+                android:layout_marginTop="@dimen/_120sdp"
+                android:layout_marginBottom="@dimen/_36sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/dont_have_acount"
+                android:textColor="@color/upper_fields_color"
+                android:textFontWeight="400"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_login_v_view"
+                app:layout_constraintStart_toStartOf="@+id/fragment_login_v_view"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_et_password"
+                tools:ignore="TextSizeCheck" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_login_tv_sign_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_120sdp"
+                android:fontFamily="@font/tt_commons_regular"
+                android:text="@string/sign_up"
+                android:textColor="@color/button_color"
+                android:textFontWeight="600"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_login_tv_dont_have_account"
+                app:layout_constraintStart_toEndOf="@+id/fragment_login_tv_dont_have_account"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_login_et_password"
+                tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</FrameLayout>

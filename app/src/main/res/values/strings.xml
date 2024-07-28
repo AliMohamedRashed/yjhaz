@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Advanced Task</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_in">Log in</string>
+    <string name="email">Email.</string>
+    <string name="write_yout_email">Write your email</string>
+    <string name="password">Password</string>
+    <string name="write_8_character_at_least">Write 8 character at least</string>
+    <string name="forgot_password">Forgot the password ?</string>
+    <string name="dont_have_acount">Don’t have an account ?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="yajha">Yajha</string>
+    <string name="name">Name.</string>
+    <string name="write_14_character">Write 14 character</string>
+    <string name="phone_number">Phone Number.</string>
+    <string name="write_11_numbers">Write 11 numbers</string>
+    <string name="confirm_Password">Confirm Password</string>
+    <string name="write_your_password_again">Write your password again</string>
+</resources>
