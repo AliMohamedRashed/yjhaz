@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ali.advancedtask.data.CategoryAdapter
 import com.ali.advancedtask.data.PopularAdapter
 import com.ali.advancedtask.data.TrendingAdapter
+import com.ali.advancedtask.data.User
 import com.ali.advancedtask.data.categories
 import com.ali.advancedtask.data.popularItems
 import com.ali.advancedtask.data.trendingItems
@@ -18,19 +19,23 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var user: User
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            user = HomeFragmentArgs.fromBundle(it).user
+        }
 
+        //Setting home screen attributes to the user passed from login screen
+        binding.fragmentHomeTvUserName.text = "Hello ${user.name.split(" ").first()}"
+        binding.fragmentHomeTvUserAddress.text = user.address
 
-       //Popular Items RV Code
+        //Popular Items RV Code
         binding.fragmentHomeRvPopular.layoutManager =  LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         val popularAdapter = PopularAdapter(popularItems)
         binding.fragmentHomeRvPopular.adapter = popularAdapter
@@ -44,6 +49,12 @@ class HomeFragment : Fragment() {
         binding.fragmentHomeRvCategory.layoutManager =  LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         val categoriesAdapter = CategoryAdapter(categories)
         binding.fragmentHomeRvCategory.adapter = categoriesAdapter
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
     }
 

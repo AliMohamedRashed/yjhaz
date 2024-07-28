@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.ali.advancedtask.data.User
 import com.ali.advancedtask.data.users
 import com.ali.advancedtask.databinding.FragmentLogInBinding
 import com.google.android.material.button.MaterialButton
@@ -21,6 +22,7 @@ class LogInFragment : Fragment() {
     private lateinit var signUpTextView: MaterialTextView
     private lateinit var action: NavDirections
     private var validEmailAndPassword: Boolean = false
+    private lateinit var user: User
 
     private var _binding: FragmentLogInBinding? = null
     private val binding get() = _binding!!
@@ -50,13 +52,14 @@ class LogInFragment : Fragment() {
         logInButton.setOnClickListener {
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
-            users.forEach { user ->
-                if (user.email == enteredEmail && user.password == enteredPassword) {
+            users.forEach {
+                if (it.email == enteredEmail && it.password == enteredPassword) {
                     validEmailAndPassword = true
+                    user = it
                 }
             }
             if (validEmailAndPassword){
-                action = LogInFragmentDirections.actionLogInFragmentToHomeFragment()
+                action = LogInFragmentDirections.actionLogInFragmentToHomeFragment(user)
                 mNavController.navigate(action)
             }else{
                 Toast.makeText(requireContext(),"Incorrect Email or Password !!",Toast.LENGTH_LONG).show()
@@ -65,7 +68,7 @@ class LogInFragment : Fragment() {
 
         //Go to Sign Up Screen
         signUpTextView.setOnClickListener {
-            val action = LogInFragmentDirections.actionLogInFragmentToSignUpFragment()
+            action = LogInFragmentDirections.actionLogInFragmentToSignUpFragment()
             mNavController.navigate(action)
         }
 

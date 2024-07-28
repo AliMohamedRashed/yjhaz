@@ -18,7 +18,7 @@
 
             <!-- Top Bar -->
             <ImageView
-                android:id="@+id/backButton"
+                android:id="@+id/fragment_home_iv_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
@@ -27,7 +27,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/homeTitle"
+                android:id="@+id/fragment_home_tv_home_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
@@ -37,22 +37,22 @@
                 android:textColor="@color/upper_fields_color"
                 android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/backButton"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_home_iv_back_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/cartButton"
+                android:id="@+id/fragment_home_iv_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
                 android:src="@drawable/ic_cart"
-                app:layout_constraintEnd_toStartOf="@id/menuButton"
+                app:layout_constraintEnd_toStartOf="@id/fragment_home_iv_menu"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/menuButton"
+                android:id="@+id/fragment_home_iv_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
@@ -62,7 +62,7 @@
 
             <!-- Greeting and Location -->
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/greetingText"
+                android:id="@+id/fragment_home_tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
@@ -74,10 +74,10 @@
                 android:textSize="@dimen/_25ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homeTitle" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_home_tv_home_title" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/locationText"
+                android:id="@+id/fragment_home_tv_user_address"
                 android:layout_width="@dimen/_200sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_21sdp"
@@ -91,19 +91,19 @@
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/greetingText" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_home_tv_user_name" />
 
             <ImageView
-                android:id="@+id/ic_address"
+                android:id="@+id/fragment_home_iv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_forward"
-                app:layout_constraintStart_toEndOf="@+id/locationText"
-                app:layout_constraintTop_toBottomOf="@+id/greetingText" />
+                app:layout_constraintStart_toEndOf="@+id/fragment_home_tv_user_address"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_home_tv_user_name" />
 
             <!-- Search Bar -->
             <EditText
-                android:id="@+id/searchBar"
+                android:id="@+id/fragment_home_et_search"
                 android:layout_width="@dimen/_220sdp"
                 android:layout_height="@dimen/_44sdp"
                 android:layout_marginStart="@dimen/_14sdp"
@@ -115,33 +115,33 @@
                 android:textColorHint="@color/search_hint_color"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/locationText" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_home_tv_user_address" />
 
             <ImageView
-                android:id="@+id/searchIcon"
+                android:id="@+id/fragment_home_iv_search"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:background="@drawable/custom_search_icon"
                 android:src="@drawable/ic_search"
-                app:layout_constraintStart_toEndOf="@+id/searchBar"
-                app:layout_constraintTop_toTopOf="@+id/searchBar" />
+                app:layout_constraintStart_toEndOf="@+id/fragment_home_et_search"
+                app:layout_constraintTop_toTopOf="@+id/fragment_home_et_search" />
 
             <ImageView
-                android:id="@+id/filterIcon"
+                android:id="@+id/fragment_home_iv_filter"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:src="@drawable/ic_filter"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/searchIcon"
-                app:layout_constraintTop_toTopOf="@+id/searchIcon" />
+                app:layout_constraintStart_toEndOf="@+id/fragment_home_iv_search"
+                app:layout_constraintTop_toTopOf="@+id/fragment_home_iv_search" />
 
             <!-- Categories -->
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/categoriesTitle"
+                android:id="@+id/fragment_home_tv_categories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_26sdp"
@@ -153,10 +153,10 @@
                 android:fontFamily="@font/tt_commons_regular"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/searchBar" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_home_et_search" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/categoriesViewAll"
+                android:id="@+id/fragment_home_tv_categories_view_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -165,7 +165,7 @@
                 android:textColor="@color/home_items_color"
                 android:textSize="@dimen/_8ssp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/searchBar" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_home_et_search" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/fragment_home_rv_category"
@@ -175,11 +175,11 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/categoriesTitle" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_home_tv_categories" />
 
             <!-- Popular Now -->
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/popularNowTitle"
+                android:id="@+id/fragment_home_tv_popular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_26sdp"
@@ -194,7 +194,7 @@
                 app:layout_constraintTop_toBottomOf="@id/fragment_home_rv_category" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/popularNowViewAll"
+                android:id="@+id/fragment_home_tv_popular_view_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -214,10 +214,10 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/popularNowTitle" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_home_tv_popular" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/trendingNowTitle"
+                android:id="@+id/fragment_home_tv_trending"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_26sdp"
@@ -232,7 +232,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/fragment_home_rv_popular" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/trendingNowViewAll"
+                android:id="@+id/fragment_home_tv_trending_view_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -253,7 +253,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trendingNowTitle" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_home_tv_trending" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

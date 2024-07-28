@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.ali.advancedtask.data.User
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
@@ -32,6 +33,7 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Go To LogIn Screen
         val logInJump =  binding.fragmentSignupTvLogin
         logInJump.setOnClickListener{
             val action = SignUpFragmentDirections.actionSignUpFragmentToLogInFragment()
