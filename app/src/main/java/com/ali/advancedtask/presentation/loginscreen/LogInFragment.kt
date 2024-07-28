@@ -1,4 +1,4 @@
-package com.ali.advancedtask.presentation
+package com.ali.advancedtask.presentation.loginscreen
 
 import android.os.Bundle
 import android.util.Log
@@ -7,19 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.ali.advancedtask.data.User
-import com.ali.advancedtask.data.users
+import com.ali.advancedtask.model.User
 import com.ali.advancedtask.databinding.FragmentLogInBinding
+import com.ali.advancedtask.presentation.UsersViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 
 class LogInFragment : Fragment() {
+    private val vm: UsersViewModel by activityViewModels()
     //Global Variables
     private lateinit var logInButton: MaterialButton
-    private lateinit var signUpTextView: MaterialTextView
+    private lateinit var signUpBtn: MaterialTextView
     private lateinit var action: NavDirections
     private var validEmailAndPassword: Boolean = false
     private lateinit var user: User
@@ -45,14 +47,16 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        vm.fetchUsers()
+
         //Go to Home Screen
         logInButton = binding.fragmentLoginBtnLogIn
-        signUpTextView = binding.fragmentLoginTvSignUp
+        signUpBtn = binding.fragmentLoginTvSignUp
 
         logInButton.setOnClickListener {
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
-            users.forEach {
+            vm.users.value?.forEach {
                 if (it.email == enteredEmail && it.password == enteredPassword) {
                     validEmailAndPassword = true
                     user = it
@@ -62,12 +66,13 @@ class LogInFragment : Fragment() {
                 action = LogInFragmentDirections.actionLogInFragmentToHomeFragment(user)
                 mNavController.navigate(action)
             }else{
+                Log.d("Users Size",vm.users.value?.size.toString())
                 Toast.makeText(requireContext(),"Incorrect Email or Password !!",Toast.LENGTH_LONG).show()
             }
         }
 
         //Go to Sign Up Screen
-        signUpTextView.setOnClickListener {
+        signUpBtn.setOnClickListener {
             action = LogInFragmentDirections.actionLogInFragmentToSignUpFragment()
             mNavController.navigate(action)
         }

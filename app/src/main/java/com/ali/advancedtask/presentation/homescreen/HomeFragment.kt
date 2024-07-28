@@ -1,4 +1,4 @@
-package com.ali.advancedtask.presentation
+package com.ali.advancedtask.presentation.homescreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ali.advancedtask.data.CategoryAdapter
-import com.ali.advancedtask.data.PopularAdapter
-import com.ali.advancedtask.data.TrendingAdapter
-import com.ali.advancedtask.data.User
-import com.ali.advancedtask.data.categories
-import com.ali.advancedtask.data.popularItems
-import com.ali.advancedtask.data.trendingItems
+import com.ali.advancedtask.model.category.CategoryAdapter
+import com.ali.advancedtask.model.popular.PopularAdapter
+import com.ali.advancedtask.model.trending.TrendingAdapter
+import com.ali.advancedtask.model.User
+import com.ali.advancedtask.model.category.categories
+import com.ali.advancedtask.model.popular.popularItems
+import com.ali.advancedtask.model.trending.trendingItems
 import com.ali.advancedtask.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -33,7 +33,6 @@ class HomeFragment : Fragment() {
 
         //Setting home screen attributes to the user passed from login screen
         binding.fragmentHomeTvUserName.text = "Hello ${user.name.split(" ").first()}"
-        binding.fragmentHomeTvUserAddress.text = user.address
 
         //Popular Items RV Code
         binding.fragmentHomeRvPopular.layoutManager =  LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)

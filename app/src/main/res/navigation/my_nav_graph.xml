@@ -6,7 +6,7 @@
     app:startDestination="@id/logInFragment">
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.ali.advancedtask.presentation.SignUpFragment"
+        android:name="com.ali.advancedtask.presentation.signupscreen.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/logInFragment"
-        android:name="com.ali.advancedtask.presentation.LogInFragment"
+        android:name="com.ali.advancedtask.presentation.loginscreen.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -29,11 +29,11 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ali.advancedtask.presentation.HomeFragment"
+        android:name="com.ali.advancedtask.presentation.homescreen.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <argument
             android:name="user"
-            app:argType="com.ali.advancedtask.data.User" />
+            app:argType="com.ali.advancedtask.model.User" />
     </fragment>
 </navigation>

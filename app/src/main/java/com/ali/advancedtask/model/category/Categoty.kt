@@ -1,4 +1,4 @@
-package com.ali.advancedtask.data
+package com.ali.advancedtask.model.category
 
 import com.ali.advancedtask.R
 

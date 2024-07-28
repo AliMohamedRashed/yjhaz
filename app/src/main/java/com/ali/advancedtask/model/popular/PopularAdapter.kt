@@ -1,7 +1,6 @@
-package com.ali.advancedtask.data
+package com.ali.advancedtask.model.popular
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ali.advancedtask.databinding.CustomPopularLayoutBinding

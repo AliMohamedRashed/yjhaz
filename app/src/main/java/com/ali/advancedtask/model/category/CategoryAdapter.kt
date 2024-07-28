@@ -1,10 +1,9 @@
-package com.ali.advancedtask.data
+package com.ali.advancedtask.model.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ali.advancedtask.databinding.CustomCategoryLayoutBinding
-import com.ali.advancedtask.databinding.CustomPopularLayoutBinding
 
 class CategoryAdapter(private val items: List<Categoty>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 

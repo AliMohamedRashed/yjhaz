@@ -1,4 +1,4 @@
-package com.ali.advancedtask.data
+package com.ali.advancedtask.model.trending
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

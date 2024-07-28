@@ -1,4 +1,4 @@
-package com.ali.advancedtask.data
+package com.ali.advancedtask.model.popular
 
 
 import com.ali.advancedtask.R
