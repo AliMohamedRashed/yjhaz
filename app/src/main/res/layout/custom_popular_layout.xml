@@ -24,7 +24,8 @@
             android:layout_height="@dimen/_25sdp"
             android:layout_gravity="top|start"
             android:layout_margin="@dimen/_15sdp"
-            app:srcCompat="@drawable/ic_favourite_not_filled" />
+            app:srcCompat="@drawable/ic_favourite_not_filled"
+            tools:ignore="ImageContrastCheck" />
         <View
             android:id="@+id/view2"
             android:layout_width="wrap_content"

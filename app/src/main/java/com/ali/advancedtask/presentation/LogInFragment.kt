@@ -1,46 +1,77 @@
 package com.ali.advancedtask.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ali.advancedtask.R
-
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import android.widget.Toast
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
+import com.ali.advancedtask.data.users
+import com.ali.advancedtask.databinding.FragmentLogInBinding
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 
 class LogInFragment : Fragment() {
-//    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-//    }
+    //Global Variables
+    private lateinit var logInButton: MaterialButton
+    private lateinit var signUpTextView: MaterialTextView
+    private lateinit var action: NavDirections
+    private var validEmailAndPassword: Boolean = false
+
+    private var _binding: FragmentLogInBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var mNavController: NavController
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mNavController = findNavController()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_log_in, container, false)
+    ): View {
+        _binding = FragmentLogInBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-//    companion object {
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            LogInFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //Go to Home Screen
+        logInButton = binding.fragmentLoginBtnLogIn
+        signUpTextView = binding.fragmentLoginTvSignUp
+
+        logInButton.setOnClickListener {
+            val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
+            val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
+            users.forEach { user ->
+                if (user.email == enteredEmail && user.password == enteredPassword) {
+                    validEmailAndPassword = true
+                }
+            }
+            if (validEmailAndPassword){
+                action = LogInFragmentDirections.actionLogInFragmentToHomeFragment()
+                mNavController.navigate(action)
+            }else{
+                Toast.makeText(requireContext(),"Incorrect Email or Password !!",Toast.LENGTH_LONG).show()
+            }
+        }
+
+        //Go to Sign Up Screen
+        signUpTextView.setOnClickListener {
+            val action = LogInFragmentDirections.actionLogInFragmentToSignUpFragment()
+            mNavController.navigate(action)
+        }
+
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

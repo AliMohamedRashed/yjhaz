@@ -6,22 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ali.advancedtask.R
 import com.ali.advancedtask.data.CategoryAdapter
 import com.ali.advancedtask.data.PopularAdapter
-import com.ali.advancedtask.data.PopularItem
 import com.ali.advancedtask.data.TrendingAdapter
-import com.ali.advancedtask.data.TrendingItems
 import com.ali.advancedtask.data.categories
 import com.ali.advancedtask.data.popularItems
 import com.ali.advancedtask.data.trendingItems
 import com.ali.advancedtask.databinding.FragmentHomeBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -29,8 +21,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
