@@ -1,8 +1,9 @@
-package com.ali.advancedtask
+package com.ali.advancedtask.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.ali.advancedtask.R
 
 
 class MainActivity : AppCompatActivity() {

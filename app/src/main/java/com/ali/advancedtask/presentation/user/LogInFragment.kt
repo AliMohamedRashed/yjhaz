@@ -1,4 +1,4 @@
-package com.ali.advancedtask.presentation.loginscreen
+package com.ali.advancedtask.presentation.user
 
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +13,6 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.model.User
 import com.ali.advancedtask.databinding.FragmentLogInBinding
-import com.ali.advancedtask.presentation.UsersViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 

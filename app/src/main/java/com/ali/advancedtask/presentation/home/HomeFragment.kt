@@ -1,4 +1,4 @@
-package com.ali.advancedtask.presentation.homescreen
+package com.ali.advancedtask.presentation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +12,6 @@ import com.ali.advancedtask.model.popular.PopularAdapter
 import com.ali.advancedtask.model.trending.TrendingAdapter
 import com.ali.advancedtask.model.User
 import com.ali.advancedtask.databinding.FragmentHomeBinding
-import com.ali.advancedtask.presentation.CategoryViewModel
-import com.ali.advancedtask.presentation.PopularViewModel
-import com.ali.advancedtask.presentation.TrendingViewModel
 
 class HomeFragment : Fragment() {
     private val categoryViewModel: CategoryViewModel by activityViewModels()

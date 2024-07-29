@@ -1,4 +1,4 @@
-package com.ali.advancedtask.presentation
+package com.ali.advancedtask.presentation.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

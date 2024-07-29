@@ -1,4 +1,4 @@
-package com.ali.advancedtask.presentation.signupscreen
+package com.ali.advancedtask.presentation.user
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
 import com.ali.advancedtask.model.User
-import com.ali.advancedtask.presentation.UsersViewModel
 import com.google.android.material.button.MaterialButton
 
 class SignUpFragment : Fragment() {
