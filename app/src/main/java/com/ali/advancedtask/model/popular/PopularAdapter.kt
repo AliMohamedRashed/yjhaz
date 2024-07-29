@@ -4,12 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ali.advancedtask.databinding.CustomPopularLayoutBinding
+import com.squareup.picasso.Picasso
 
-class PopularAdapter(private val items: List<PopularItem>) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
+class PopularAdapter(private var items: List<PopularItem>) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
 
     inner class PopularViewHolder(private val binding: CustomPopularLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind( popularItem: PopularItem){
-            binding.customPopularItemImage.setImageResource(popularItem.popularImage)
+            Picasso.get()
+                .load(popularItem.popularImage)
+                .into(binding.customPopularIv)
             binding.customPopularItemName.setText(popularItem.popularName)
             binding.customPopularItemDistance.setText(popularItem.popularDistance)
         }
@@ -27,6 +30,10 @@ class PopularAdapter(private val items: List<PopularItem>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
+    }
+    fun updateData(newItems: List<PopularItem>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 }
 

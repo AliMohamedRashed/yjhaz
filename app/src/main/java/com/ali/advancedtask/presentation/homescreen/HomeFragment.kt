@@ -5,17 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ali.advancedtask.model.category.CategoryAdapter
 import com.ali.advancedtask.model.popular.PopularAdapter
 import com.ali.advancedtask.model.trending.TrendingAdapter
 import com.ali.advancedtask.model.User
-import com.ali.advancedtask.model.category.categories
-import com.ali.advancedtask.model.popular.popularItems
-import com.ali.advancedtask.model.trending.trendingItems
 import com.ali.advancedtask.databinding.FragmentHomeBinding
+import com.ali.advancedtask.presentation.CategoryViewModel
+import com.ali.advancedtask.presentation.PopularViewModel
+import com.ali.advancedtask.presentation.TrendingViewModel
 
 class HomeFragment : Fragment() {
+    private val categoryViewModel: CategoryViewModel by activityViewModels()
+    private lateinit var categoriesAdapter: CategoryAdapter
+    private val trendingViewModel: TrendingViewModel by activityViewModels()
+    private lateinit var trendingAdapter: TrendingAdapter
+    private val popularViewModel: PopularViewModel by activityViewModels()
+    private lateinit var popularAdapter: PopularAdapter
+
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -31,23 +39,28 @@ class HomeFragment : Fragment() {
             user = HomeFragmentArgs.fromBundle(it).user
         }
 
-        //Setting home screen attributes to the user passed from login screen
-        binding.fragmentHomeTvUserName.text = "Hello ${user.name.split(" ").first()}"
-
-        //Popular Items RV Code
-        binding.fragmentHomeRvPopular.layoutManager =  LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        val popularAdapter = PopularAdapter(popularItems)
-        binding.fragmentHomeRvPopular.adapter = popularAdapter
-
-        //Trending Items RV Code
-        binding.fragmentHomeRvTrending.layoutManager =  LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        val trendingAdapter = TrendingAdapter(trendingItems)
-        binding.fragmentHomeRvTrending.adapter = trendingAdapter
-
-        //Categories Items RV Code
-        binding.fragmentHomeRvCategory.layoutManager =  LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        val categoriesAdapter = CategoryAdapter(categories)
+        categoriesAdapter = CategoryAdapter(emptyList())
+        binding.fragmentHomeRvCategory.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.fragmentHomeRvCategory.adapter = categoriesAdapter
+        categoryViewModel.categories.observe(viewLifecycleOwner) { categoryList ->
+            categoriesAdapter.updateData(categoryList)
+        }
+
+        trendingAdapter = TrendingAdapter(emptyList())
+        binding.fragmentHomeRvTrending.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.fragmentHomeRvTrending.adapter = trendingAdapter
+        trendingViewModel.trending.observe(viewLifecycleOwner) { trendingList ->
+            trendingAdapter.updateData(trendingList)
+        }
+
+        popularAdapter = PopularAdapter(emptyList())
+        binding.fragmentHomeRvPopular.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.fragmentHomeRvPopular.adapter = popularAdapter
+        popularViewModel.popular.observe(viewLifecycleOwner) { popularList ->
+            popularAdapter.updateData(popularList)
+        }
+
+        binding.fragmentHomeTvUserName.text = "Hello ${user.name.split(" ").first()}"
 
         return binding.root
     }
@@ -61,23 +74,4 @@ class HomeFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment HomeFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            HomeFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(com.ali.advancedtask.ARG_PARAM1, param1)
-//                    putString(com.ali.advancedtask.ARG_PARAM2, param2)
-//                }
-//            }
-//    }
 }

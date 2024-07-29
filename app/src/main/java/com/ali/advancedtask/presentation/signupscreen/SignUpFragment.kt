@@ -68,5 +68,9 @@ class SignUpFragment : Fragment() {
         val action = SignUpFragmentDirections.actionSignUpFragmentToLogInFragment()
         mNavController.navigate(action)
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 }

@@ -3,14 +3,29 @@ package com.ali.advancedtask.model.category
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.ali.advancedtask.databinding.CustomCategoryLayoutBinding
 
-class CategoryAdapter(private val items: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(private var items: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    inner class CategoryViewHolder(private val binding: CustomCategoryLayoutBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind( category: Category){
-            binding.customCategoryIv.setImageResource(category.catImage)
-            binding.customCategoryTvCatName.setText(category.catName)
+    inner class CategoryViewHolder(private val binding: CustomCategoryLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        //getting image from database using coil library
+        fun bind(category: Category) {
+            val imageLoader = ImageLoader.Builder(binding.customCategoryIv.context)
+                .components {
+                    add(SvgDecoder.Factory())
+                }
+                .build()
+            val request = ImageRequest.Builder(binding.customCategoryIv.context)
+                .data(category.catImage)
+                .target(binding.customCategoryIv)
+                .build()
+
+            imageLoader.enqueue(request)
+            binding.customCategoryTvCatName.text = category.catName
         }
     }
 
@@ -20,11 +35,16 @@ class CategoryAdapter(private val items: List<Category>) : RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-       return items.size
+        return items.size
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val item = items[position]
         holder.bind(item)
+    }
+
+    fun updateData(newItems: List<Category>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 }
