@@ -1,11 +1,11 @@
 package com.ali.advancedtask.presentation.user
 
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -46,20 +46,62 @@ class SignUpFragment : Fragment() {
             val enteredPhoneNumber = binding.fragmentSignupEtPhoneNumber.text.toString()
             val enteredPassword = binding.fragmentSignupEtPassword.text.toString()
             val enteredConfirmedPassword = binding.fragmentSignupEtConfirmPassword.text.toString()
-            if(enteredPassword != enteredConfirmedPassword){
-                Toast.makeText(requireContext(),"The entered password must be the same !", Toast.LENGTH_LONG).show()
-            }else{
-                val newUser = User(10,enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)
-                vm.addUser(newUser)
-                navToLogInScreen()
+            if(validateInputs(enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)){
+                if(enteredPassword == enteredConfirmedPassword){
+                    val newUser = User(10,enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)
+                    vm.addUser(newUser)
+                    navToLogInScreen()
+                }else{
+                    LogInFragment.showToast("The entered password must be the same !")
+                }
             }
-
         }
 
         //Go To LogIn Screen
         val logInJump =  binding.fragmentSignupTvLogin
         logInJump.setOnClickListener{
             navToLogInScreen()
+        }
+    }
+    private fun validateInputs(name: String,email: String,phoneNumber: String, password: String): Boolean {
+        return when {
+            TextUtils.isEmpty(name) -> {
+                LogInFragment.showToast("Email cannot be empty")
+                false
+            }
+            name.length < 14 -> {
+                LogInFragment.showToast("Name must be at least 14 characters long")
+                false
+            }
+            TextUtils.isEmpty(email) -> {
+                LogInFragment.showToast("Email cannot be empty")
+                false
+            }
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                LogInFragment.showToast("Invalid email format")
+                false
+            }
+            TextUtils.isEmpty(phoneNumber) -> {
+                LogInFragment.showToast("Email cannot be empty")
+                false
+            }
+            phoneNumber.length < 11 -> {
+                LogInFragment.showToast("Phone number must be at least 11 characters long")
+                false
+            }
+            !android.util.Patterns.PHONE.matcher(phoneNumber).matches() -> {
+                LogInFragment.showToast("Invalid Phone format")
+                false
+            }
+            TextUtils.isEmpty(password) -> {
+                LogInFragment.showToast("Password cannot be empty")
+                false
+            }
+            password.length < 8 -> {
+                LogInFragment.showToast("Password must be at least 8 characters long")
+                false
+            }
+            else -> true
         }
     }
 
