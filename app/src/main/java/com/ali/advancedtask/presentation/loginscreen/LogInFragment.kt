@@ -19,6 +19,7 @@ import com.google.android.material.textview.MaterialTextView
 
 class LogInFragment : Fragment() {
     private val vm: UsersViewModel by activityViewModels()
+    private var users: List<User>? =null
     //Global Variables
     private lateinit var logInButton: MaterialButton
     private lateinit var signUpBtn: MaterialTextView
@@ -47,7 +48,9 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vm.fetchUsers()
+        vm.users.observe(viewLifecycleOwner){
+            users = it
+        }
 
         //Go to Home Screen
         logInButton = binding.fragmentLoginBtnLogIn
@@ -56,7 +59,7 @@ class LogInFragment : Fragment() {
         logInButton.setOnClickListener {
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
-            vm.users.value?.forEach {
+            users?.forEach {
                 if (it.email == enteredEmail && it.password == enteredPassword) {
                     validEmailAndPassword = true
                     user = it
@@ -66,7 +69,7 @@ class LogInFragment : Fragment() {
                 action = LogInFragmentDirections.actionLogInFragmentToHomeFragment(user)
                 mNavController.navigate(action)
             }else{
-                Log.d("Users Size",vm.users.value?.size.toString())
+                Log.d("Users Size",users?.size.toString())
                 Toast.makeText(requireContext(),"Incorrect Email or Password !!",Toast.LENGTH_LONG).show()
             }
         }

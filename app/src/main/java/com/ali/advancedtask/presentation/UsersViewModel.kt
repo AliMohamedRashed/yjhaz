@@ -5,9 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ali.advancedtask.data.UsersApiService
+import com.ali.advancedtask.YajhazApplication
+import com.ali.advancedtask.data.local.UsersDataBase
+import com.ali.advancedtask.data.remote.UsersApiService
 import com.ali.advancedtask.model.User
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +24,8 @@ class UsersViewModel: ViewModel() {
 
     private val apiService: UsersApiService
 
+    private val usersDao = UsersDataBase.getDAOInstance(YajhazApplication.getApplicationContext())
+
     init {
         val retrofit: Retrofit = Retrofit.Builder()
             .addConverterFactory(
@@ -30,21 +36,53 @@ class UsersViewModel: ViewModel() {
 
         apiService = retrofit.create(UsersApiService::class.java)
 
+        fetchUsers()
     }
 
-    fun fetchUsers() {
+    private fun fetchUsers() {
         viewModelScope.launch {
-            apiService.getUsers().enqueue(object : Callback<List<User>> {
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    response.body()?.let {
-                        _users.postValue(it)
+            withContext(Dispatchers.IO){
+                apiService.getUsers().enqueue(object : Callback<Map<String, User>> {
+                    override fun onResponse(call: Call<Map<String, User>>, response: Response<Map<String, User>>) {
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                // Convert map to list
+                                val userList = it.values.toList()
+                                _users.postValue(userList)
+                            } ?: run {
+                                Log.e("UsersViewModel", "Response body is null")
+                            }
+                        } else {
+                            Log.e("UsersViewModel", "Response not successful: ${response.errorBody()?.string()}")
+                        }
                     }
 
-                }
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    t.printStackTrace()
-                }
-            })
+                    override fun onFailure(call: Call<Map<String, User>>, t: Throwable) {
+                        Log.e("UsersViewModel", "Failed to fetch users", t)
+                    }
+                })
+            }
         }
     }
+
+    fun addUser(user: User) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                apiService.addUser(user).enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            fetchUsers() // Refresh the user list after adding a new user
+                        } else {
+                            Log.e("UsersViewModel", "Failed to add user: ${response.errorBody()?.string()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        t.printStackTrace()
+                    }
+                })
+            }
+        }
+    }
+
 }
