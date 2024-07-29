@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ali.advancedtask.databinding.CustomCategoryLayoutBinding
 
-class CategoryAdapter(private val items: List<Categoty>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(private val items: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     inner class CategoryViewHolder(private val binding: CustomCategoryLayoutBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind( category: Categoty){
+        fun bind( category: Category){
             binding.customCategoryIv.setImageResource(category.catImage)
             binding.customCategoryTvCatName.setText(category.catName)
         }

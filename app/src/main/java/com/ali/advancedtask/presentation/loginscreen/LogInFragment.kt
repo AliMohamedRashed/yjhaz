@@ -33,7 +33,6 @@ class LogInFragment : Fragment() {
     private lateinit var mNavController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         mNavController = findNavController()
     }
 
