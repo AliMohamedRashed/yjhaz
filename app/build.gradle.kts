@@ -4,6 +4,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("org.jetbrains.kotlin.plugin.parcelize")
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 kapt {
     correctErrorTypes = true
@@ -56,6 +57,9 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.71828")
     implementation("io.coil-kt:coil:2.1.0")
     implementation("io.coil-kt:coil-svg:2.1.0")
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

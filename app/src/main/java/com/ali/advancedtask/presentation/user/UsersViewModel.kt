@@ -5,29 +5,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ali.advancedtask.model.User
-import com.ali.advancedtask.model.UsersRepository
+import com.ali.advancedtask.data.UsersRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UsersViewModel: ViewModel() {
+@HiltViewModel
+class UsersViewModel @Inject constructor(
+    private val repository: UsersRepository,
+): ViewModel() {
     private val _users = MutableLiveData(emptyList<User>())
     val users: LiveData<List<User>> get() = _users
-
-    private val repo = UsersRepository()
-
     init {
         fetchUsers()
     }
-
     private fun fetchUsers() {
         viewModelScope.launch {
-            val usersList = repo.getAllUsers()
+            val usersList = repository.getAllUsers()
             _users.postValue(usersList)
         }
     }
-
     fun addUser(user: User){
         viewModelScope.launch {
-            repo.addUser(user)
+            repository.addUser(user)
             fetchUsers()
         }
     }

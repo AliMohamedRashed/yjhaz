@@ -1,28 +1,26 @@
-package com.ali.advancedtask.model
+package com.ali.advancedtask.data
 
 import android.util.Log
-import com.ali.advancedtask.data.UsersApiService
+import com.ali.advancedtask.data.remote.UsersApiService
+import com.ali.advancedtask.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class UsersRepository {
-
-    private val apiService: UsersApiService = Retrofit.Builder()
-        .addConverterFactory(
-            GsonConverterFactory.create()
-        )
-        .baseUrl("https://yjhaz-495b5-default-rtdb.firebaseio.com/")
-        .build()
-        .create(UsersApiService::class.java)
-
+class UsersRepository @Inject constructor(
+    private val apiService: UsersApiService
+){
+    private var highestId = 9
     suspend fun getAllUsers() = withContext(Dispatchers.IO) {
         return@withContext apiService.getUsers().values.toList<User>()
     }
     suspend fun addUser(user: User) {
         try {
             withContext(Dispatchers.IO) {
+                highestId += 1
+                user.id = highestId
                 apiService.addUser(user)
             }
         } catch (e: Exception) {

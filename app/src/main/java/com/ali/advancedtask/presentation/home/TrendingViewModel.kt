@@ -5,15 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ali.advancedtask.model.trending.TrendingItems
-import com.ali.advancedtask.model.trending.TrendingRepository
+import com.ali.advancedtask.data.TrendingRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TrendingViewModel : ViewModel() {
+@HiltViewModel
+class TrendingViewModel @Inject constructor(
+    private val repository: TrendingRepository
+) : ViewModel() {
 
     private val _trending = MutableLiveData(emptyList<TrendingItems>())
     val trending: LiveData<List<TrendingItems>> get() = _trending
-
-    private val repo = TrendingRepository()
 
     init {
         loadTrendingItems()
@@ -21,7 +24,7 @@ class TrendingViewModel : ViewModel() {
 
     private fun loadTrendingItems() {
         viewModelScope.launch {
-            val trendingItemsList = repo.getAllTrendingItems()
+            val trendingItemsList = repository.getAllTrendingItems()
             _trending.postValue(trendingItemsList)
         }
     }

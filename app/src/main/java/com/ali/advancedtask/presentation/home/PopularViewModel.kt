@@ -5,15 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ali.advancedtask.model.popular.PopularItem
-import com.ali.advancedtask.model.popular.PopularRepository
+import com.ali.advancedtask.data.PopularRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PopularViewModel: ViewModel() {
+@HiltViewModel
+class PopularViewModel @Inject constructor(
+    private val repository: PopularRepository
+) : ViewModel() {
 
     private val _popular = MutableLiveData(emptyList<PopularItem>())
     val popular: LiveData<List<PopularItem>> get() = _popular
-
-    private val repo = PopularRepository()
 
     init {
         loadPopularItems()
@@ -21,7 +24,7 @@ class PopularViewModel: ViewModel() {
 
     private fun loadPopularItems() {
         viewModelScope.launch {
-            val trendingItemsList = repo.getAllPopularItems()
+            val trendingItemsList = repository.getAllPopularItems()
             _popular.postValue(trendingItemsList)
         }
     }

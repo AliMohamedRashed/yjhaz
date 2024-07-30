@@ -6,15 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
 import com.ali.advancedtask.model.User
 import com.google.android.material.button.MaterialButton
-
+import dagger.hilt.android.AndroidEntryPoint
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
-    private val vm: UsersViewModel by activityViewModels()
+    private val vm: UsersViewModel by viewModels()
     private lateinit var signUpBtn: MaterialButton
 
     private var _binding: FragmentSignUpBinding? = null
@@ -48,7 +49,7 @@ class SignUpFragment : Fragment() {
             val enteredConfirmedPassword = binding.fragmentSignupEtConfirmPassword.text.toString()
             if(validateInputs(enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)){
                 if(enteredPassword == enteredConfirmedPassword){
-                    val newUser = User(10,enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)
+                    val newUser = User(null, enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)
                     vm.addUser(newUser)
                     navToLogInScreen()
                 }else{

@@ -1,24 +1,27 @@
 package com.ali.advancedtask.presentation.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ali.advancedtask.model.category.CategoryAdapter
 import com.ali.advancedtask.model.popular.PopularAdapter
 import com.ali.advancedtask.model.trending.TrendingAdapter
 import com.ali.advancedtask.model.User
 import com.ali.advancedtask.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-    private val categoryViewModel: CategoryViewModel by activityViewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
     private lateinit var categoriesAdapter: CategoryAdapter
-    private val trendingViewModel: TrendingViewModel by activityViewModels()
+    private val trendingViewModel: TrendingViewModel by viewModels()
     private lateinit var trendingAdapter: TrendingAdapter
-    private val popularViewModel: PopularViewModel by activityViewModels()
+    private val popularViewModel: PopularViewModel by viewModels()
     private lateinit var popularAdapter: PopularAdapter
 
     private var _binding: FragmentHomeBinding? = null
@@ -26,6 +29,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var user: User
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -17,9 +17,10 @@ import com.ali.advancedtask.model.User
 import com.ali.advancedtask.databinding.FragmentLogInBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
-
+import dagger.hilt.android.AndroidEntryPoint
+@AndroidEntryPoint
 class LogInFragment : Fragment() {
-    private val vm: UsersViewModel by activityViewModels()
+    private val vm: UsersViewModel by viewModels()
     private var users: List<User>? =null
     //Global Variables
     private lateinit var logInButton: MaterialButton
