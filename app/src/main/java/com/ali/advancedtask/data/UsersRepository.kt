@@ -5,8 +5,6 @@ import com.ali.advancedtask.data.remote.UsersApiService
 import com.ali.advancedtask.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class UsersRepository @Inject constructor(
