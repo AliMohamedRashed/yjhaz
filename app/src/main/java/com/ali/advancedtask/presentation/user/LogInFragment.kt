@@ -13,8 +13,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.YajhazApplication
+import com.ali.advancedtask.data.SharedPreferencesHelper
 import com.ali.advancedtask.model.User
 import com.ali.advancedtask.databinding.FragmentLogInBinding
+import com.ali.advancedtask.presentation.MainActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,6 +60,7 @@ class LogInFragment : Fragment() {
         signUpBtn = binding.fragmentLoginTvSignUp
 
         logInButton.setOnClickListener {
+
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
 
@@ -72,8 +75,7 @@ class LogInFragment : Fragment() {
                     action = LogInFragmentDirections.actionLogInFragmentToHomeFragment(user)
                     mNavController.navigate(action)
                 }else{
-                    Log.d("Users Size",users?.size.toString())
-                    Toast.makeText(requireContext(),"Incorrect Email or Password !!",Toast.LENGTH_LONG).show()
+                    MainActivity.showToast("Incorrect Email or Password !!")
                 }
             }
         }
@@ -88,30 +90,24 @@ class LogInFragment : Fragment() {
     private fun validateInputs(email: String, password: String): Boolean {
         return when {
             TextUtils.isEmpty(email) -> {
-                showToast("Email cannot be empty")
+                MainActivity.showToast("Email cannot be empty")
                 false
             }
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                showToast("Invalid email format")
+                MainActivity.showToast("Invalid email format")
                 false
             }
             TextUtils.isEmpty(password) -> {
-                showToast("Password cannot be empty")
+                MainActivity.showToast("Password cannot be empty")
                 false
             }
             password.length < 8 -> {
-                showToast("Password must be at least 8 characters long")
+                MainActivity.showToast("Password must be at least 8 characters long")
                 false
             }
             else -> true
         }
     }
-    companion object {
-        fun showToast(message: String) {
-            Toast.makeText(YajhazApplication.getApplicationContext(), message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
 
     override fun onDestroy() {
         super.onDestroy()

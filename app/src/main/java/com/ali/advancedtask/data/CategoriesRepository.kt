@@ -10,6 +10,6 @@ class CategoriesRepository @Inject constructor(
 ) {
 
     suspend fun getAllCategories() = withContext(Dispatchers.IO) {
-        return@withContext apiService.getCategories().values.toList()
+        apiService.getCategories().values.toList()
     }
 }

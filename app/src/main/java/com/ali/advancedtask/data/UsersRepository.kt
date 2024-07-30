@@ -1,6 +1,5 @@
 package com.ali.advancedtask.data
 
-import android.util.Log
 import com.ali.advancedtask.data.remote.UsersApiService
 import com.ali.advancedtask.model.User
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +11,8 @@ class UsersRepository @Inject constructor(
 ){
     private var highestId = 9
     suspend fun getAllUsers() = withContext(Dispatchers.IO) {
-        return@withContext apiService.getUsers().values.toList<User>()
+        val response = apiService.getUsers()
+        return@withContext response.values.toList<User>()
     }
     suspend fun addUser(user: User) {
         try {
@@ -22,8 +22,7 @@ class UsersRepository @Inject constructor(
                 apiService.addUser(user)
             }
         } catch (e: Exception) {
-            // Handle the exception, e.g., log it or update UI with an error message
-            Log.e("UsersViewModel", "Error adding user", e)
+            e.printStackTrace()
         }
     }
 }

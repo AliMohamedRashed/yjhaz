@@ -9,7 +9,7 @@ class TrendingRepository  @Inject constructor(
     private val apiService: TrendingApiService
 ){
     suspend fun getAllTrendingItems() = withContext(Dispatchers.IO) {
-        return@withContext apiService.getTrendingItems().values.toList()
+        apiService.getTrendingItems().values.toList()
     }
 
 }

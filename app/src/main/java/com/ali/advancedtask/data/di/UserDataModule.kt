@@ -12,6 +12,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -22,9 +25,34 @@ object UserDataModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        val interceptor = Interceptor { chain ->
+            val originalRequest = chain.request()
+            val requestBuilder = originalRequest.newBuilder()
+                .addHeader("Authorization", "Bearer 12456283")
+                .addHeader("Content-Type", "Yjhaz/json")
+                .addHeader("Accept", "Yjhaz/json")
+                .build()
+
+//            val token = SharedPreferencesHelper.getToken(context)
+//            if (token != null) {
+//                requestBuilder.addHeader("Authorization", "Bearer $token")
+//            }
+
+           return@Interceptor chain.proceed(requestBuilder)
+        }
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .addInterceptor(loggingInterceptor)
+            .build()
+
         return Retrofit.Builder()
             .baseUrl("https://yjhaz-495b5-default-rtdb.firebaseio.com/")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
             .build()
     }
 

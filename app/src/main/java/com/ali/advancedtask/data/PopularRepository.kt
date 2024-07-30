@@ -10,7 +10,7 @@ class PopularRepository @Inject constructor(
 ){
 
     suspend fun getAllPopularItems() = withContext(Dispatchers.IO) {
-        return@withContext apiService.getPopularItems().values.toList()
+       apiService.getPopularItems().values.toList()
     }
 
 }
