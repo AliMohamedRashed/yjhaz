@@ -31,9 +31,8 @@ object UserDataModule {
         val interceptor = Interceptor { chain ->
             val originalRequest = chain.request()
             val requestBuilder = originalRequest.newBuilder()
-                .addHeader("Authorization", "Bearer 12456283")
-                .addHeader("Content-Type", "Yjhaz/json")
-                .addHeader("Accept", "Yjhaz/json")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
                 .build()
 
 //            val token = SharedPreferencesHelper.getToken(context)
