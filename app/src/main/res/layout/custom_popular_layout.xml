@@ -61,9 +61,10 @@
                 android:textColor="@color/popular_now_color"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/star1"
@@ -96,13 +97,13 @@
                     android:src="@drawable/ic_star_not_filled" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/car_rate"
+                    android:id="@+id/category_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_2sdp"
                     android:letterSpacing="-0.01"
-                    android:textAlignment="center"
+                    android:padding="@dimen/_2sdp"
                     android:text="4.3"
+                    android:textAlignment="center"
                     android:textColor="@color/popular_now_color"
                     android:textSize="@dimen/_5ssp"
                     android:textStyle="bold" />

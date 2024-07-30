@@ -1,4 +1,4 @@
-package com.ali.advancedtask.model.category
+package com.ali.advancedtask.presentation.home.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,7 @@ import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.ali.advancedtask.databinding.CustomCategoryLayoutBinding
+import com.ali.advancedtask.model.Category
 
 class CategoryAdapter(private var items: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 

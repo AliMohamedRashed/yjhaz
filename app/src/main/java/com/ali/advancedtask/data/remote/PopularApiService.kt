@@ -1,6 +1,6 @@
 package com.ali.advancedtask.data.remote
 
-import com.ali.advancedtask.model.popular.PopularItem
+import com.ali.advancedtask.model.PopularItem
 import retrofit2.http.GET
 
 interface PopularApiService {

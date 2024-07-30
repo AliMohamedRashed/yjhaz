@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ali.advancedtask.model.category.CategoryAdapter
-import com.ali.advancedtask.model.popular.PopularAdapter
-import com.ali.advancedtask.model.trending.TrendingAdapter
+import com.ali.advancedtask.presentation.home.adapters.CategoryAdapter
+import com.ali.advancedtask.presentation.home.adapters.PopularAdapter
+import com.ali.advancedtask.presentation.home.adapters.TrendingAdapter
 import com.ali.advancedtask.model.User
 import com.ali.advancedtask.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint

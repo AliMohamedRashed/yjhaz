@@ -1,4 +1,4 @@
-package com.ali.advancedtask.model.trending
+package com.ali.advancedtask.model
 import com.google.gson.annotations.SerializedName
 
 data class TrendingItems (
