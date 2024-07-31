@@ -2,20 +2,17 @@ package com.ali.advancedtask.presentation.user
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.ali.advancedtask.YajhazApplication
-import com.ali.advancedtask.data.SharedPreferencesHelper
-import com.ali.advancedtask.model.User
+import com.ali.advancedtask.domain.model.User
 import com.ali.advancedtask.databinding.FragmentLogInBinding
+import com.ali.advancedtask.domain.viewmodel.user_viewmodel.UsersViewModel
 import com.ali.advancedtask.presentation.MainActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView

@@ -10,7 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
-import com.ali.advancedtask.model.User
+import com.ali.advancedtask.domain.viewmodel.user_viewmodel.UsersViewModel
+import com.ali.advancedtask.domain.model.User
 import com.ali.advancedtask.presentation.MainActivity
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint

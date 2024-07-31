@@ -1,10 +1,10 @@
-package com.ali.advancedtask.presentation.user
+package com.ali.advancedtask.domain.viewmodel.user_viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ali.advancedtask.model.User
+import com.ali.advancedtask.domain.model.User
 import com.ali.advancedtask.data.UsersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,8 +23,11 @@ class UsersViewModel @Inject constructor(
         viewModelScope.launch {
             val usersList = repository.getAllUsers()
             _users.postValue(usersList)
+
         }
     }
+
+    //todo fun getMyUser(username, pass): boolean
     fun addUser(user: User){
         viewModelScope.launch {
             repository.addUser(user)

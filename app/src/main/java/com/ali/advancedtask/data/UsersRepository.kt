@@ -1,7 +1,7 @@
 package com.ali.advancedtask.data
 
 import com.ali.advancedtask.data.remote.UsersApiService
-import com.ali.advancedtask.model.User
+import com.ali.advancedtask.domain.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.ali.advancedtask.model
+package com.ali.advancedtask.domain.model
 
 import android.os.Parcelable
 

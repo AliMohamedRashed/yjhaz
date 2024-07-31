@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ali.advancedtask.databinding.CustomTrendingLayoutBinding
-import com.ali.advancedtask.model.TrendingItems
+import com.ali.advancedtask.domain.model.TrendingItems
 import com.squareup.picasso.Picasso
 
 class TrendingAdapter(private var items: List<TrendingItems>) : RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder>()  {

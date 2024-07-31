@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ali.advancedtask.presentation.home.adapters.CategoryAdapter
 import com.ali.advancedtask.presentation.home.adapters.PopularAdapter
 import com.ali.advancedtask.presentation.home.adapters.TrendingAdapter
-import com.ali.advancedtask.model.User
+import com.ali.advancedtask.domain.model.User
 import com.ali.advancedtask.databinding.FragmentHomeBinding
+import com.ali.advancedtask.domain.viewmodel.home_viewmodel.CategoryViewModel
+import com.ali.advancedtask.domain.viewmodel.home_viewmodel.PopularViewModel
+import com.ali.advancedtask.domain.viewmodel.home_viewmodel.TrendingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

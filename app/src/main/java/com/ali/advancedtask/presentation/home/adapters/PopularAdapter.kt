@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ali.advancedtask.R
 import com.ali.advancedtask.databinding.CustomPopularLayoutBinding
-import com.ali.advancedtask.model.PopularItem
+import com.ali.advancedtask.domain.model.PopularItem
 import com.squareup.picasso.Picasso
 
 class PopularAdapter(private var items: List<PopularItem>) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {

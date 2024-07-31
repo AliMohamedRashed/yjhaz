@@ -1,4 +1,4 @@
-package com.ali.advancedtask.model
+package com.ali.advancedtask.domain.model
 
 import com.google.gson.annotations.SerializedName
 data class Category (

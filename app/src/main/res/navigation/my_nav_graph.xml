@@ -34,6 +34,6 @@
         tools:layout="@layout/fragment_home">
         <argument
             android:name="user"
-            app:argType="com.ali.advancedtask.model.User" />
+            app:argType="com.ali.advancedtask.domain.model.User" />
     </fragment>
 </navigation>
