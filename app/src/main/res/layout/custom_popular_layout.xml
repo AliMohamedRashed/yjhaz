@@ -15,8 +15,8 @@
             android:id="@+id/custom_popular_iv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/custom_popular_is_favourite"
@@ -26,6 +26,7 @@
             android:layout_margin="@dimen/_15sdp"
             app:srcCompat="@drawable/ic_favourite_not_filled"
             tools:ignore="ImageContrastCheck" />
+
         <View
             android:id="@+id/view2"
             android:layout_width="wrap_content"
@@ -38,18 +39,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
-            android:orientation="vertical"
             android:layout_marginStart="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_10sdp">
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/custom_popular_item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_17ssp"
-                android:textStyle="bold"
                 android:letterSpacing="-0.01"
-                android:textColor="@color/popular_now_color" />
+                android:textColor="@color/popular_now_color"
+                android:textSize="@dimen/_17ssp"
+                android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/custom_popular_item_distance"
@@ -57,44 +58,28 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_location"
                 android:letterSpacing="-0.01"
-                android:textSize="@dimen/_7ssp"
-                android:textColor="@color/popular_now_color"/>
+                android:textColor="@color/popular_now_color"
+                android:textSize="@dimen/_7ssp" />
+
 
             <LinearLayout
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/star1"
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/ic_star_filled" />
-
-                <ImageView
-                    android:id="@+id/star2"
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/ic_star_filled" />
-
-                <ImageView
-                    android:id="@+id/star3"
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/ic_star_filled" />
-
-                <ImageView
-                    android:id="@+id/star4"
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/ic_star_filled" />
-
-                <ImageView
-                    android:id="@+id/star5"
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/ic_star_not_filled" />
+                <RatingBar
+                    android:id="@+id/rating_bar_small"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="1.5"
+                    android:stepSize="0.1"
+                    android:progressTint="@color/popular_now_color"
+                    android:secondaryProgressTint="@color/popular_now_color"
+                    android:progressBackgroundTint="@color/shadow_color"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/category_rate"
@@ -102,7 +87,6 @@
                     android:layout_height="wrap_content"
                     android:letterSpacing="-0.01"
                     android:padding="@dimen/_2sdp"
-                    android:text="4.3"
                     android:textAlignment="center"
                     android:textColor="@color/popular_now_color"
                     android:textSize="@dimen/_5ssp"
@@ -113,130 +97,5 @@
         </LinearLayout>
 
     </FrameLayout>
-    <!--    <ImageView-->
-<!--        android:id="@+id/custom_popular_item_image"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="1"-->
-<!--        android:src="@drawable/wings"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <View-->
-<!--        android:id="@+id/view1"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/view2"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/custom_popular_item_image"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/custom_popular_item_image"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/custom_popular_item_image" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/custom_popular_is_favourite"-->
-<!--        android:layout_width="@dimen/_50sdp"-->
-<!--        android:layout_height="@dimen/_50sdp"-->
-<!--        android:layout_margin="@dimen/_15sdp"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/view1"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/view1"-->
-<!--        app:srcCompat="@drawable/ic_favourite_not_filled" />-->
-
-<!--    <View-->
-<!--        android:id="@+id/view2"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@color/shadow_color"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/custom_popular_item_image"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/custom_popular_item_image"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/custom_popular_item_image"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/view1" />-->
-
-<!--    <com.google.android.material.textview.MaterialTextView-->
-<!--        android:id="@+id/custom_popular_item_name"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginTop="@dimen/_35sdp"-->
-<!--        android:layout_marginStart="@dimen/_20sdp"-->
-<!--        android:text="Wings"-->
-<!--        android:textStyle="normal"-->
-<!--        android:letterSpacing="-0.01"-->
-<!--        android:textColor="@color/popular_now_color"-->
-<!--        android:textSize="@dimen/_40ssp"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/view2"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/view2" />-->
-
-<!--    <com.google.android.material.textview.MaterialTextView-->
-<!--        android:id="@+id/custom_popular_item_distance"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginTop="@dimen/_35sdp"-->
-<!--        android:drawableStart="@drawable/ic_location"-->
-<!--        android:letterSpacing="-0.01"-->
-<!--        android:text="15 Km"-->
-<!--        android:textColor="@color/popular_now_color"-->
-<!--        android:textSize="@dimen/_15ssp"-->
-<!--        android:textStyle="normal"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/custom_popular_item_name"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/custom_popular_item_name" />-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="@dimen/_120sdp"-->
-<!--        android:layout_height="@dimen/_25sdp"-->
-<!--        android:layout_marginTop="@dimen/_35sdp"-->
-<!--        android:layout_marginStart="@dimen/_16sdp"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/view2"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/custom_popular_item_distance">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/star1"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_star_filled" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/star2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_star_filled" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/star3"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_star_filled" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/star4"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_star_filled" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/star5"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_star_not_filled" />-->
-
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/car_rate"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="@dimen/_2sdp"-->
-<!--            android:letterSpacing="-0.01"-->
-<!--            android:textAlignment="center"-->
-<!--            android:text="4.3"-->
-<!--            android:textColor="@color/popular_now_color"-->
-<!--            android:textSize="@dimen/_12ssp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/custom_popular_item_name"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/custom_popular_item_name" />-->
-
-<!--    </LinearLayout>-->
 
 </androidx.cardview.widget.CardView>
