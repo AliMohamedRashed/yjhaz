@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ali.advancedtask.R
 import com.ali.advancedtask.databinding.CustomPopularLayoutBinding
 import com.ali.advancedtask.domain.model.PopularItem
 import com.squareup.picasso.Picasso
