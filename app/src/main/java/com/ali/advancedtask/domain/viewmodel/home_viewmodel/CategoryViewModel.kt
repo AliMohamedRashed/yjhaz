@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ali.advancedtask.data.CategoriesRepository
+import com.ali.advancedtask.data.repository.interfaces.CategoriesRepository
 import com.ali.advancedtask.domain.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

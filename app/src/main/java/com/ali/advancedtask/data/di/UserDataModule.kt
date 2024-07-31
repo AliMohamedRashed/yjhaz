@@ -1,13 +1,17 @@
 package com.ali.advancedtask.data.di
 
-import com.ali.advancedtask.data.CategoriesRepository
-import com.ali.advancedtask.data.PopularRepository
-import com.ali.advancedtask.data.TrendingRepository
-import com.ali.advancedtask.data.UsersRepository
+import com.ali.advancedtask.data.repository.CategoriesRepositoryImpl
+import com.ali.advancedtask.data.repository.PopularRepositoryImpl
+import com.ali.advancedtask.data.repository.TrendingRepositoryImpl
+import com.ali.advancedtask.data.repository.UsersRepositoryImpl
 import com.ali.advancedtask.data.remote.CategoriesApiService
 import com.ali.advancedtask.data.remote.PopularApiService
 import com.ali.advancedtask.data.remote.TrendingApiService
 import com.ali.advancedtask.data.remote.UsersApiService
+import com.ali.advancedtask.data.repository.interfaces.CategoriesRepository
+import com.ali.advancedtask.data.repository.interfaces.PopularRepository
+import com.ali.advancedtask.data.repository.interfaces.TrendingRepository
+import com.ali.advancedtask.data.repository.interfaces.UsersRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -64,7 +68,7 @@ object UserDataModule {
     @Provides
     @Singleton
     fun provideTrendingRepository(apiService: TrendingApiService): TrendingRepository {
-        return TrendingRepository(apiService)
+        return TrendingRepositoryImpl(apiService)
     }
 
     @Provides
@@ -76,7 +80,7 @@ object UserDataModule {
     @Provides
     @Singleton
     fun providePopularRepository(apiService: PopularApiService): PopularRepository {
-        return PopularRepository(apiService)
+        return PopularRepositoryImpl(apiService)
     }
 
     @Provides
@@ -88,7 +92,7 @@ object UserDataModule {
     @Provides
     @Singleton
     fun provideCategoriesRepository(apiService: CategoriesApiService): CategoriesRepository {
-        return CategoriesRepository(apiService)
+        return CategoriesRepositoryImpl(apiService)
     }
 
     @Provides
@@ -100,7 +104,7 @@ object UserDataModule {
     @Provides
     @Singleton
     fun provideUsersRepository(apiService: UsersApiService): UsersRepository {
-        return UsersRepository(apiService)
+        return UsersRepositoryImpl(apiService)
     }
 
 

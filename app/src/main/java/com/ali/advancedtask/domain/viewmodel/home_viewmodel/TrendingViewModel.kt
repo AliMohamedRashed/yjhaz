@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ali.advancedtask.domain.model.TrendingItems
-import com.ali.advancedtask.data.TrendingRepository
+import com.ali.advancedtask.data.repository.interfaces.TrendingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

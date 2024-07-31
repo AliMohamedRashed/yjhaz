@@ -20,14 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
     private val vm: UsersViewModel by viewModels()
-    private var users: List<User>? =null
-    //Global Variables
     private lateinit var logInButton: MaterialButton
     private lateinit var signUpBtn: MaterialTextView
     private lateinit var action: NavDirections
-    private var validEmailAndPassword: Boolean = false
-    private lateinit var user: User
-
+    private var user: User? = null
     private var _binding: FragmentLogInBinding? = null
     private val binding get() = _binding!!
 
@@ -48,10 +44,6 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vm.users.observe(viewLifecycleOwner){
-            users = it
-        }
-
         //Go to Home Screen
         logInButton = binding.fragmentLoginBtnLogIn
         signUpBtn = binding.fragmentLoginTvSignUp
@@ -62,14 +54,9 @@ class LogInFragment : Fragment() {
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
 
             if (validateInputs(enteredEmail, enteredPassword)) {
-                users?.forEach {
-                    if (it.email == enteredEmail && it.password == enteredPassword) {
-                        validEmailAndPassword = true
-                        user = it
-                    }
-                }
-                if (validEmailAndPassword){
-                    action = LogInFragmentDirections.actionLogInFragmentToHomeFragment(user)
+                user = vm.getUser(enteredEmail,enteredPassword)
+                if (user!=null){
+                    action = LogInFragmentDirections.actionLogInFragmentToHomeFragment(user!!)
                     mNavController.navigate(action)
                 }else{
                     MainActivity.showToast("Incorrect Email or Password !!")

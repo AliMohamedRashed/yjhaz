@@ -1,19 +1,23 @@
-package com.ali.advancedtask.data
+package com.ali.advancedtask.data.repository
 
 import com.ali.advancedtask.data.remote.UsersApiService
+import com.ali.advancedtask.data.repository.interfaces.UsersRepository
 import com.ali.advancedtask.domain.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class UsersRepository @Inject constructor(
+class UsersRepositoryImpl @Inject constructor(
     private val apiService: UsersApiService
-){
+) : UsersRepository {
     private var highestId = 9
+    override
     suspend fun getAllUsers() = withContext(Dispatchers.IO) {
         val response = apiService.getUsers()
-        return@withContext response.values.toList<User>()
+        response.values.toList()
     }
+
+    override
     suspend fun addUser(user: User) {
         try {
             withContext(Dispatchers.IO) {
