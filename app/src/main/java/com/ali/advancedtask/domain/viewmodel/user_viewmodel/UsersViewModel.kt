@@ -17,7 +17,7 @@ class UsersViewModel @Inject constructor(
 
     private val _users = MutableLiveData(emptyList<User>())
 
-    val users: LiveData<List<User>> get() = _users
+//    val users: LiveData<List<User>> get() = _users
     init {
         fetchUsers()
     }
