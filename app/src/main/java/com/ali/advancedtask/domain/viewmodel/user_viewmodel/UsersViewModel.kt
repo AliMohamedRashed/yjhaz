@@ -16,8 +16,13 @@ class UsersViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _users = MutableLiveData(emptyList<User>())
+    private val _registrationStatus = MutableLiveData<Boolean>()
+    val registrationStatus: LiveData<Boolean> get() = _registrationStatus
+    private val _user = MutableLiveData<User?>()
 
+    val user: LiveData<User?> get() = _user
 //    val users: LiveData<List<User>> get() = _users
+
     init {
         fetchUsers()
     }
@@ -28,18 +33,18 @@ class UsersViewModel @Inject constructor(
         }
     }
 
-    fun getUser(userEmail: String, password: String): User? {
-        _users.value?.forEach{
-            if (it.email == userEmail && it.password == password) {
-                return it
-            }
+    fun getUser(userEmail: String, password: String) {
+        viewModelScope.launch {
+            val user = _users.value?.find { it.email == userEmail && it.password == password }
+            _user.postValue(user)
         }
-        return null
     }
 
     fun addUser(user: User){
         viewModelScope.launch {
             repository.addUser(user)
+            fetchUsers()
+            _registrationStatus.postValue(true)
         }
     }
 }

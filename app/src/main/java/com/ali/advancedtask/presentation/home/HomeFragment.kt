@@ -5,17 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ali.advancedtask.R
+import com.ali.advancedtask.databinding.FragmentHomeBinding
 import com.ali.advancedtask.presentation.home.adapters.CategoryAdapter
 import com.ali.advancedtask.presentation.home.adapters.PopularAdapter
 import com.ali.advancedtask.presentation.home.adapters.TrendingAdapter
 import com.ali.advancedtask.domain.model.User
-import com.ali.advancedtask.databinding.FragmentHomeBinding
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.CategoryViewModel
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.PopularViewModel
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.TrendingViewModel
+import com.ali.advancedtask.presentation.user.LogInFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,17 +33,20 @@ class HomeFragment : Fragment() {
     private lateinit var trendingAdapter: TrendingAdapter
     private val popularViewModel: PopularViewModel by viewModels()
     private lateinit var popularAdapter: PopularAdapter
-
+    private lateinit var action: NavDirections
+    private lateinit var mNavController: NavController
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var user: User
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        mNavController = findNavController()
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         arguments?.let {
@@ -72,7 +82,33 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val logOut = binding.fragmentHomeIvBackButton
+        logOut.setOnClickListener {
+            showLogoutConfirmationDialog()
+        }
+
     }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Logout")
+        builder.setMessage("Do you really want to log out?")
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            // Perform logout action here
+            action = HomeFragmentDirections.actionHomeFragmentToLogInFragment()
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.homeFragment, true)
+                .build()
+            mNavController.navigate(action,navOptions)
+            dialog.dismiss()
+            // For example, navigate to login screen or clear user data
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

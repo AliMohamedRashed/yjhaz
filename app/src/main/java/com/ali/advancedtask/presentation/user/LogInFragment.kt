@@ -9,21 +9,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.ali.advancedtask.domain.model.User
+import com.ali.advancedtask.R
 import com.ali.advancedtask.databinding.FragmentLogInBinding
 import com.ali.advancedtask.domain.viewmodel.user_viewmodel.UsersViewModel
 import com.ali.advancedtask.presentation.MainActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
+
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
     private val vm: UsersViewModel by viewModels()
     private lateinit var logInButton: MaterialButton
     private lateinit var signUpBtn: MaterialTextView
-    private lateinit var action: NavDirections
-    private var user: User? = null
     private var _binding: FragmentLogInBinding? = null
     private val binding get() = _binding!!
 
@@ -54,41 +54,53 @@ class LogInFragment : Fragment() {
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
 
             if (validateInputs(enteredEmail, enteredPassword)) {
-                user = vm.getUser(enteredEmail,enteredPassword)
-                if (user!=null){
-                    action = LogInFragmentDirections.actionLogInFragmentToHomeFragment(user!!)
-                    mNavController.navigate(action)
-                }else{
-                    MainActivity.showToast("Incorrect Email or Password !!")
-                }
+                vm.getUser(enteredEmail, enteredPassword)
+            }
+        }
+        vm.user.observe(viewLifecycleOwner) { user ->
+            if (user != null) {
+                navToTypeScreen(LogInFragmentDirections.actionLogInFragmentToHomeFragment(user))
+            } else {
+                MainActivity.showToast("Incorrect Email or Password !!")
             }
         }
 
         //Go to Sign Up Screen
         signUpBtn.setOnClickListener {
-            action = LogInFragmentDirections.actionLogInFragmentToSignUpFragment()
-            mNavController.navigate(action)
+            navToTypeScreen(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
         }
 
     }
+
+    private fun navToTypeScreen(action: NavDirections) {
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.logInFragment, true)
+            .build()
+        mNavController.navigate(action, navOptions)
+    }
+
     private fun validateInputs(email: String, password: String): Boolean {
         return when {
             TextUtils.isEmpty(email) -> {
                 MainActivity.showToast("Email cannot be empty")
                 false
             }
+
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                 MainActivity.showToast("Invalid email format")
                 false
             }
+
             TextUtils.isEmpty(password) -> {
                 MainActivity.showToast("Password cannot be empty")
                 false
             }
+
             password.length < 8 -> {
                 MainActivity.showToast("Password must be at least 8 characters long")
                 false
             }
+
             else -> true
         }
     }

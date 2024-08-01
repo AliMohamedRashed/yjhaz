@@ -35,5 +35,8 @@
         <argument
             android:name="user"
             app:argType="com.ali.advancedtask.domain.model.User" />
+        <action
+            android:id="@+id/action_homeFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
 </navigation>

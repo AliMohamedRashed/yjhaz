@@ -25,7 +25,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UserDataModule {
+object MyDataModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -53,7 +53,7 @@ object UserDataModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("https://yjhaz-495b5-default-rtdb.firebaseio.com/")
+            .baseUrl("https://users-bfc61-default-rtdb.firebaseio.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

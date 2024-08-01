@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.ali.advancedtask.R
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
 import com.ali.advancedtask.domain.viewmodel.user_viewmodel.UsersViewModel
 import com.ali.advancedtask.domain.model.User
@@ -53,8 +55,12 @@ class SignUpFragment : Fragment() {
                 if(enteredPassword == enteredConfirmedPassword){
                     val newUser = User(null, enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)
                     vm.addUser(newUser)
-                    navToLogInScreen()
-                    MainActivity.showToast("User registered.")
+                    vm.registrationStatus.observe(viewLifecycleOwner) { valid ->
+                        if (valid) {
+                            navToLogInScreen()
+                            MainActivity.showToast("User registered.")
+                        }
+                    }
                 }else{
                     MainActivity.showToast("The entered password must be the same !")
                 }
@@ -111,7 +117,10 @@ class SignUpFragment : Fragment() {
 
     private fun navToLogInScreen(){
         val action = SignUpFragmentDirections.actionSignUpFragmentToLogInFragment()
-        mNavController.navigate(action)
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.signUpFragment, true)
+            .build()
+        mNavController.navigate(action,navOptions)
     }
     override fun onDestroy() {
         super.onDestroy()
