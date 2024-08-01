@@ -119,6 +119,7 @@ class SignUpFragment : Fragment() {
         val action = SignUpFragmentDirections.actionSignUpFragmentToLogInFragment()
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.signUpFragment, true)
+            .setLaunchSingleTop(true)
             .build()
         mNavController.navigate(action,navOptions)
     }

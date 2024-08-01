@@ -13,11 +13,11 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ali.advancedtask.R
+import com.ali.advancedtask.data.SharedPreferencesHelper
 import com.ali.advancedtask.databinding.FragmentHomeBinding
 import com.ali.advancedtask.presentation.home.adapters.CategoryAdapter
 import com.ali.advancedtask.presentation.home.adapters.PopularAdapter
 import com.ali.advancedtask.presentation.home.adapters.TrendingAdapter
-import com.ali.advancedtask.domain.model.User
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.CategoryViewModel
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.PopularViewModel
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.TrendingViewModel
@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var user: User
+    private lateinit var userName: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,8 +48,11 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         arguments?.let {
-            user = HomeFragmentArgs.fromBundle(it).user
+            userName = HomeFragmentArgs.fromBundle(it).userName
         }
+        val getUserName = SharedPreferencesHelper.getUserName(requireContext())
+        if(getUserName !=null) {binding.fragmentHomeTvUserName.text = "Hello ${getUserName?.split(" ")?.first()}"}
+        else {binding.fragmentHomeTvUserName.text = "Hello ${userName.split(" ").first()}"}
 
         categoriesAdapter = CategoryAdapter(emptyList())
         binding.fragmentHomeRvCategory.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -72,7 +75,7 @@ class HomeFragment : Fragment() {
             popularAdapter.updateData(popularList)
         }
 
-        binding.fragmentHomeTvUserName.text = "Hello ${user.name.split(" ").first()}"
+
 
         return binding.root
     }
@@ -93,9 +96,13 @@ class HomeFragment : Fragment() {
         builder.setMessage("Do you really want to log out?")
         builder.setPositiveButton("Yes") { dialog, _ ->
             // Perform logout action here
+            SharedPreferencesHelper.removeUserId(requireContext())
+            SharedPreferencesHelper.removeUserName(requireContext())
+            SharedPreferencesHelper.removeCheckBoxState(requireContext())
             action = HomeFragmentDirections.actionHomeFragmentToLogInFragment()
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.homeFragment, true)
+                .setLaunchSingleTop(true)
                 .build()
             mNavController.navigate(action,navOptions)
             dialog.dismiss()

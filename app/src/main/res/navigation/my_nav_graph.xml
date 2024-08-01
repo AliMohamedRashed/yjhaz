@@ -33,8 +33,9 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <argument
-            android:name="user"
-            app:argType="com.ali.advancedtask.domain.model.User" />
+            android:name="user_name"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/action_homeFragment_to_logInFragment"
             app:destination="@id/logInFragment" />

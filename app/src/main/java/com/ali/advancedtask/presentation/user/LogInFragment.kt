@@ -6,12 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
+import com.ali.advancedtask.data.SharedPreferencesHelper
 import com.ali.advancedtask.databinding.FragmentLogInBinding
 import com.ali.advancedtask.domain.viewmodel.user_viewmodel.UsersViewModel
 import com.ali.advancedtask.presentation.MainActivity
@@ -24,6 +25,7 @@ class LogInFragment : Fragment() {
     private val vm: UsersViewModel by viewModels()
     private lateinit var logInButton: MaterialButton
     private lateinit var signUpBtn: MaterialTextView
+    private lateinit var keepMeLoggedInCB: CheckBox
     private var _binding: FragmentLogInBinding? = null
     private val binding get() = _binding!!
 
@@ -44,6 +46,8 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        keepMeLoggedInCB = binding.fragmentLoginCbKeepMeLoggedIn
+
         //Go to Home Screen
         logInButton = binding.fragmentLoginBtnLogIn
         signUpBtn = binding.fragmentLoginTvSignUp
@@ -59,7 +63,19 @@ class LogInFragment : Fragment() {
         }
         vm.user.observe(viewLifecycleOwner) { user ->
             if (user != null) {
-                navToTypeScreen(LogInFragmentDirections.actionLogInFragmentToHomeFragment(user))
+                if(keepMeLoggedInCB.isChecked){
+                    SharedPreferencesHelper.saveUserId(requireContext(),user.id.toString())
+                    SharedPreferencesHelper.saveUserName(requireContext(),user.name)
+                    SharedPreferencesHelper.saveCheckBoxState(requireContext(),true)
+                }else{
+                    SharedPreferencesHelper.saveCheckBoxState(requireContext(),false)
+                }
+                val action = LogInFragmentDirections.actionLogInFragmentToHomeFragment(userName = user.name)
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.logInFragment,true)
+                    .setLaunchSingleTop(true)
+                    .build()
+                mNavController.navigate(action,navOptions)
             } else {
                 MainActivity.showToast("Incorrect Email or Password !!")
             }
@@ -67,16 +83,14 @@ class LogInFragment : Fragment() {
 
         //Go to Sign Up Screen
         signUpBtn.setOnClickListener {
-            navToTypeScreen(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
+            val action = LogInFragmentDirections.actionLogInFragmentToSignUpFragment()
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.logInFragment,true)
+                .setLaunchSingleTop(true)
+                .build()
+            mNavController.navigate(action,navOptions)
         }
 
-    }
-
-    private fun navToTypeScreen(action: NavDirections) {
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.logInFragment, true)
-            .build()
-        mNavController.navigate(action, navOptions)
     }
 
     private fun validateInputs(email: String, password: String): Boolean {
