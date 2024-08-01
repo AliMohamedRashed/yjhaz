@@ -19,7 +19,6 @@ class UsersViewModel @Inject constructor(
     private val _registrationStatus = MutableLiveData<Boolean>()
     val registrationStatus: LiveData<Boolean> get() = _registrationStatus
     private val _user = MutableLiveData<User?>()
-
     val user: LiveData<User?> get() = _user
 //    val users: LiveData<List<User>> get() = _users
 
@@ -43,7 +42,6 @@ class UsersViewModel @Inject constructor(
     fun addUser(user: User){
         viewModelScope.launch {
             repository.addUser(user)
-            fetchUsers()
             _registrationStatus.postValue(true)
         }
     }
