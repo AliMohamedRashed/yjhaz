@@ -10,7 +10,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    var disableBackPress = false
     companion object {
         fun showToast(message: String) {
             Toast.makeText(YajhazApplication.getApplicationContext(), message, Toast.LENGTH_SHORT).show()

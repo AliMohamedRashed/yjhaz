@@ -1,6 +1,5 @@
 package com.ali.advancedtask.presentation.home
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,6 @@ import com.ali.advancedtask.domain.model.User
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.CategoryViewModel
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.PopularViewModel
 import com.ali.advancedtask.domain.viewmodel.home_viewmodel.TrendingViewModel
-import com.ali.advancedtask.presentation.user.LogInFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
