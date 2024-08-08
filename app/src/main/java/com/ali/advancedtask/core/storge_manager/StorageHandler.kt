@@ -1,17 +1,11 @@
 package com.ali.advancedtask.core.storge_manager
 
-interface StorageHandler {
+interface StorageHandler{
 
-    fun setString(key: String, value: String)
-    fun getString(key: String) :String?
+    fun setToken(key: String, value: String)
 
-    fun setInt(key: String, value: Int)
-    fun getInt(key: String) : Int?
+    fun getToken(key: String) :String?
 
-    fun setBoolean(key: String, value: Boolean)
-    fun getBoolean(key: String) : Boolean?
+    fun removeToken(key: String)
 
-    fun removeByKey(key: String)
-
-    fun removeAll(sharedPrefName: String)
 }

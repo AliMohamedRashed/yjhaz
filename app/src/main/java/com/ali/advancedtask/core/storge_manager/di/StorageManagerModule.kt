@@ -13,7 +13,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object StorageManagerModule {
-
     @Provides
     @Singleton
     fun provideStorageManager(@ApplicationContext context: Context): StorageHandler =

@@ -1,27 +1,31 @@
 package com.ali.advancedtask.feature.signup.presentation
 
 import android.os.Bundle
-import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
+import com.ali.advancedtask.core.storge_manager.StorageHandler
+import com.ali.advancedtask.core.storge_manager.StorageManager
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
 
-import com.ali.advancedtask.feature.login.domin.model.User
 import com.ali.advancedtask.feature.activities.MainActivity
-import com.ali.advancedtask.feature.login.domin.viewmodel.UsersViewModel
+import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
+import com.ali.advancedtask.feature.signup.domain.viewmodel.SignUpViewModel
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
-    private val vm: UsersViewModel by viewModels()
-    private lateinit var signUpBtn: MaterialButton
+    private val signUpViewModel: SignUpViewModel by viewModels()
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
@@ -45,74 +49,36 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Sign up a new USER
-        signUpBtn = binding.fragmentSignupBtnSignup
-        signUpBtn.setOnClickListener {
+        viewLifecycleOwner.lifecycleScope.launch {
+            signUpViewModel.state.collect { screenState ->
+                if (screenState.response.success) {
+                    navToHomeScreen()
+                } else if (screenState.response.message.isNotEmpty()) {
+                    MainActivity.showToast(screenState.response.message)
+                }
+            }
+        }
+        binding.fragmentSignupBtnSignup.setOnClickListener {
             val enteredName = binding.fragmentSignupEtName.text.toString()
             val enteredEmail = binding.fragmentSignupEtEmail.text.toString()
             val enteredPhoneNumber = binding.fragmentSignupEtPhoneNumber.text.toString()
             val enteredPassword = binding.fragmentSignupEtPassword.text.toString()
             val enteredConfirmedPassword = binding.fragmentSignupEtConfirmPassword.text.toString()
-            if(validateInputs(enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)){
-                if(enteredPassword == enteredConfirmedPassword){
-                    val newUser = User(null, enteredName,enteredEmail,enteredPhoneNumber,enteredPassword)
-                    vm.addUser(newUser)
-                    vm.registrationStatus.observe(viewLifecycleOwner) { valid ->
-                        if (valid) {
-                            navToLogInScreen()
-                            MainActivity.showToast("User registered.")
-                        }
-                    }
-                }else{
-                    MainActivity.showToast("The entered password must be the same !")
+            if (enteredPassword == enteredConfirmedPassword) {
+                if (enteredName.isNotEmpty() && enteredEmail.isNotEmpty() && enteredPhoneNumber.isNotEmpty()) {
+                    val newUser = SignUpRequestDto(enteredName, enteredEmail, enteredPhoneNumber, enteredPassword)
+                    signUpViewModel.registerNewUser(newUser)
+                } else {
+                    MainActivity.showToast("All fields must be filled!")
                 }
+            } else {
+                MainActivity.showToast("The entered password must be the same!")
             }
         }
 
         //Go To LogIn Screen
-        val logInJump =  binding.fragmentSignupTvLogin
-        logInJump.setOnClickListener{
+        binding.fragmentSignupTvLogin.setOnClickListener{
             navToLogInScreen()
-        }
-    }
-    private fun validateInputs(name: String,email: String,phoneNumber: String, password: String): Boolean {
-        return when {
-            TextUtils.isEmpty(name) -> {
-                MainActivity.showToast("Email cannot be empty")
-                false
-            }
-            name.length < 14 -> {
-                MainActivity.showToast("Name must be at least 14 characters long")
-                false
-            }
-            TextUtils.isEmpty(email) -> {
-                MainActivity.showToast("Email cannot be empty")
-                false
-            }
-            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                MainActivity.showToast("Invalid email format")
-                false
-            }
-            TextUtils.isEmpty(phoneNumber) -> {
-                MainActivity.showToast("Email cannot be empty")
-                false
-            }
-            phoneNumber.length < 11 -> {
-                MainActivity.showToast("Phone number must be at least 11 characters long")
-                false
-            }
-            !android.util.Patterns.PHONE.matcher(phoneNumber).matches() -> {
-                MainActivity.showToast("Invalid Phone format")
-                false
-            }
-            TextUtils.isEmpty(password) -> {
-                MainActivity.showToast("Password cannot be empty")
-                false
-            }
-            password.length < 8 -> {
-                MainActivity.showToast("Password must be at least 8 characters long")
-                false
-            }
-            else -> true
         }
     }
 
@@ -124,6 +90,16 @@ class SignUpFragment : Fragment() {
             .build()
         mNavController.navigate(action,navOptions)
     }
+
+    private fun navToHomeScreen(){
+        val action = SignUpFragmentDirections.actionSignUpFragmentToHomeFragment()
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.signUpFragment, true)
+            .setLaunchSingleTop(true)
+            .build()
+        mNavController.navigate(action,navOptions)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

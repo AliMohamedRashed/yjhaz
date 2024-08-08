@@ -7,26 +7,25 @@ import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.ali.advancedtask.databinding.CustomCategoryLayoutBinding
-import com.ali.advancedtask.feature.home.data.model.response.Category
 
-class CategoryAdapter(private var items: List<Category>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(private var items: List<String>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     inner class CategoryViewHolder(private val binding: CustomCategoryLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
 
         //getting image from database using coil library
-        fun bind(category: Category) {
-            val imageLoader = ImageLoader.Builder(binding.customCategoryIv.context)
-                .components {
-                    add(SvgDecoder.Factory())
-                }
-                .build()
-            val request = ImageRequest.Builder(binding.customCategoryIv.context)
-                .data(category.catImage)
-                .target(binding.customCategoryIv)
-                .build()
-
-            imageLoader.enqueue(request)
-            binding.customCategoryTvCatName.text = category.catName
+        fun bind(category: String) {
+//            val imageLoader = ImageLoader.Builder(binding.customCategoryIv.context)
+//                .components {
+//                    add(SvgDecoder.Factory())
+//                }
+//                .build()
+//            val request = ImageRequest.Builder(binding.customCategoryIv.context)
+//                .data(category.catImage)
+//                .target(binding.customCategoryIv)
+//                .build()
+//
+//            imageLoader.enqueue(request)
+//            binding.customCategoryTvCatName.text = category.catName
         }
     }
 
@@ -44,7 +43,7 @@ class CategoryAdapter(private var items: List<Category>) : RecyclerView.Adapter<
         holder.bind(item)
     }
 
-    fun updateData(newItems: List<Category>) {
+    fun updateData(newItems: List<String>) {
         items = newItems
         notifyDataSetChanged()
     }

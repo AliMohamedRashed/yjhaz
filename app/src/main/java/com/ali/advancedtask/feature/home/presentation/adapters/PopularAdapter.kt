@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ali.advancedtask.databinding.CustomPopularLayoutBinding
-import com.ali.advancedtask.feature.home.data.model.response.PopularItem
 import com.squareup.picasso.Picasso
 
-class PopularAdapter(private var items: List<PopularItem>) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
+class PopularAdapter(private var items: List<String>) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularViewHolder {
         val binding = CustomPopularLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,22 +23,22 @@ class PopularAdapter(private var items: List<PopularItem>) : RecyclerView.Adapte
         holder.bind(item)
     }
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: List<PopularItem>) {
+    fun updateData(newItems: List<String>) {
         items = newItems
         notifyDataSetChanged()
     }
 
     inner class PopularViewHolder(private val binding: CustomPopularLayoutBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind( popularItem: PopularItem){
-            Picasso.get()
-                .load(popularItem.popularImage)
-                .into(binding.customPopularIv)
-            binding.customPopularItemName.text = popularItem.popularName
-            binding.customPopularItemDistance.text = popularItem.popularDistance
-            binding.categoryRate.text = popularItem.popularRate.toString()
-
-            val  popularItemRating = popularItem.popularRate
-            binding.ratingBarSmall.rating = popularItemRating.toFloat()
+        fun bind( popularItem: String){
+//            Picasso.get()
+//                .load(popularItem.popularImage)
+//                .into(binding.customPopularIv)
+//            binding.customPopularItemName.text = popularItem.popularName
+//            binding.customPopularItemDistance.text = popularItem.popularDistance
+//            binding.categoryRate.text = popularItem.popularRate.toString()
+//
+//            val  popularItemRating = popularItem.popularRate
+//            binding.ratingBarSmall.rating = popularItemRating.toFloat()
         }
     }
 }

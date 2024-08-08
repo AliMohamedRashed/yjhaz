@@ -1,11 +1,11 @@
-package com.ali.advancedtask.feature.login.data.model.response
+package com.ali.advancedtask.feature.signup.data.model.response
 
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponseDto(
+data class SignUpResponseDto(
     @SerializedName("data")
-    val loginDataResponse: LoginDataResponse?,
+    val `data`: SignUpDataResponse?,
     @SerializedName("message")
     val message: String,
     @SerializedName("response_code")

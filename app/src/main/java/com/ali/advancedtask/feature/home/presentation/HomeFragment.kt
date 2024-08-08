@@ -11,16 +11,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ali.advancedtask.R
-import com.ali.advancedtask.core.user_manager.UserHandler
 import com.ali.advancedtask.databinding.FragmentHomeBinding
 import com.ali.advancedtask.feature.home.domin.viewmodel.HomeViewModel
 import com.ali.advancedtask.feature.home.presentation.adapters.CategoryAdapter
 import com.ali.advancedtask.feature.home.presentation.adapters.PopularAdapter
 import com.ali.advancedtask.feature.home.presentation.adapters.TrendingAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -35,9 +32,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var userName: String
 
-    @Inject
-    lateinit var userHandler: UserHandler
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -50,38 +44,36 @@ class HomeFragment : Fragment() {
         arguments?.let {
             userName = HomeFragmentArgs.fromBundle(it).userName
         }
-        val getUserName = userHandler.getUserName()
-        if (getUserName != null) {
-            binding.fragmentHomeTvUserName.text = "Hello ${getUserName?.split(" ")?.first()}"
-        } else {
-            binding.fragmentHomeTvUserName.text = "Hello ${userName.split(" ").first()}"
-        }
+//        val getUserName = userHandler.getUserName()
+//        if (getUserName != null) {
+//            binding.fragmentHomeTvUserName.text = "Hello ${getUserName?.split(" ")?.first()}"
+//        } else {
+//            binding.fragmentHomeTvUserName.text = "Hello ${userName.split(" ").first()}"
+//        }
 
-        categoriesAdapter = CategoryAdapter(emptyList())
-        binding.fragmentHomeRvCategory.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.fragmentHomeRvCategory.adapter = categoriesAdapter
-        viewModel.categories.observe(viewLifecycleOwner) { categoryList ->
-            categoriesAdapter.updateData(categoryList)
-        }
-
-        trendingAdapter = TrendingAdapter(emptyList())
-        binding.fragmentHomeRvTrending.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.fragmentHomeRvTrending.adapter = trendingAdapter
-        viewModel.trending.observe(viewLifecycleOwner) { trendingList ->
-            trendingAdapter.updateData(trendingList)
-        }
-
-        popularAdapter = PopularAdapter(emptyList())
-        binding.fragmentHomeRvPopular.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.fragmentHomeRvPopular.adapter = popularAdapter
-        viewModel.popular.observe(viewLifecycleOwner) { popularList ->
-            popularAdapter.updateData(popularList)
-        }
-
-
+//        categoriesAdapter = CategoryAdapter(emptyList())
+//        binding.fragmentHomeRvCategory.layoutManager =
+//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.fragmentHomeRvCategory.adapter = categoriesAdapter
+//        viewModel.categories.observe(viewLifecycleOwner) { categoryList ->
+//            categoriesAdapter.updateData(categoryList)
+//        }
+//
+//        trendingAdapter = TrendingAdapter(emptyList())
+//        binding.fragmentHomeRvTrending.layoutManager =
+//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.fragmentHomeRvTrending.adapter = trendingAdapter
+//        viewModel.trending.observe(viewLifecycleOwner) { trendingList ->
+//            trendingAdapter.updateData(trendingList)
+//        }
+//
+//        popularAdapter = PopularAdapter(emptyList())
+//        binding.fragmentHomeRvPopular.layoutManager =
+//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.fragmentHomeRvPopular.adapter = popularAdapter
+//        viewModel.popular.observe(viewLifecycleOwner) { popularList ->
+//            popularAdapter.updateData(popularList)
+//        }
 
         return binding.root
     }
@@ -102,9 +94,6 @@ class HomeFragment : Fragment() {
         builder.setMessage("Do you really want to log out?")
         builder.setPositiveButton("Yes") { dialog, _ ->
             // Perform logout action here
-            userHandler.removeUserId()
-            userHandler.removeUserName()
-            userHandler.removeCheckBoxState()
             action = HomeFragmentDirections.actionHomeFragmentToLogInFragment()
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.homeFragment, true)

@@ -7,13 +7,15 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.ali.advancedtask.R
 import com.ali.advancedtask.YajhazApplication
-import com.ali.advancedtask.core.user_manager.UserHandler
+import com.ali.advancedtask.core.storge_manager.StorageHandler
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var storageHandler: StorageHandler
 
     companion object {
         fun showToast(message: String) {
@@ -21,9 +23,6 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
     }
-
-    @Inject
-    lateinit var userHandler: UserHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,23 +32,17 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // Check the checkbox value
-        val isCheckBoxChecked = userHandler.getCheckBoxState()
-
-        // Determine the start destination based on the checkbox state
-        if (isCheckBoxChecked == true) {
-            // Navigate to HomeFragment if checkbox is checked
+        if (!storageHandler.getToken("user_token").isNullOrEmpty()) {
             navController.navigate(R.id.homeFragment, null, getNavOptions(R.id.homeFragment))
         } else {
-            // Navigate to LogInFragment if checkbox is not checked
             navController.navigate(R.id.logInFragment, null, getNavOptions(R.id.logInFragment))
         }
     }
 
     private fun getNavOptions(destinationId: Int): NavOptions {
         return NavOptions.Builder()
-            .setPopUpTo(destinationId, true) // Clear the back stack up to the destinationId
-            .setLaunchSingleTop(true) // Ensure the destination is the top of the stack
+            .setPopUpTo(destinationId, true)
+            .setLaunchSingleTop(true)
             .build()
     }
 }

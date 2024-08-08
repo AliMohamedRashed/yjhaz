@@ -4,16 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ali.advancedtask.databinding.CustomTrendingLayoutBinding
-import com.ali.advancedtask.feature.home.data.model.response.TrendingItems
 import com.squareup.picasso.Picasso
 
-class TrendingAdapter(private var items: List<TrendingItems>) : RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder>()  {
+class TrendingAdapter(private var items: List<String>) : RecyclerView.Adapter<TrendingAdapter.TrendingViewHolder>()  {
 
     inner class TrendingViewHolder(private val binding: CustomTrendingLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(trendingItems: TrendingItems) {
-            Picasso.get()
-                .load(trendingItems.trendingImage)
-                .into(binding.customTrendingIv)
+        fun bind(trendingItems: String) {
+//            Picasso.get()
+//                .load(trendingItems.trendingImage)
+//                .into(binding.customTrendingIv)
         }
     }
 
@@ -29,7 +28,7 @@ class TrendingAdapter(private var items: List<TrendingItems>) : RecyclerView.Ada
         val item = items[position]
         holder.bind(item)
     }
-    fun updateData(newItems: List<TrendingItems>) {
+    fun updateData(newItems: List<String>) {
         items = newItems
         notifyDataSetChanged()
     }

@@ -12,5 +12,6 @@ class YajhazApplication: Application() {
     companion object{
         private  lateinit var application: Application
         fun getApplicationContext(): Context = application.applicationContext
+
     }
 }
