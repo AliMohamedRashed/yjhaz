@@ -1,6 +1,7 @@
 package com.ali.advancedtask.feature.home.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
     @Inject
     lateinit var storageHandler: StorageHandler
+
     private val homeViewModel: HomeViewModel by viewModels()
 
     private lateinit var categoriesAdapter: CategoryAdapter
@@ -49,15 +51,10 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        arguments?.let {
+        binding.fragmentHomeTvUserName.text = "Hello ${
+            (storageHandler.getString("user_name"))?.split(" ")?.first()
+        }"
 
-        }
-//        val getUserName = userHandler.getUserName()
-//        if (getUserName != null) {
-//            binding.fragmentHomeTvUserName.text = "Hello ${getUserName?.split(" ")?.first()}"
-//        } else {
-//            binding.fragmentHomeTvUserName.text = "Hello ${userName.split(" ").first()}"
-//        }
         categoriesAdapter = CategoryAdapter(emptyList())
         binding.fragmentHomeRvCategory.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -96,6 +93,9 @@ class HomeFragment : Fragment() {
             }
         }
 
+        Log.d("User Token",storageHandler.getToken("user_token")!!)
+        Log.d("User Name",storageHandler.getString("user_name")!!)
+
 
         binding.fragmentHomeIvBackButton.setOnClickListener {
             showLogoutConfirmationDialog()
@@ -108,7 +108,7 @@ class HomeFragment : Fragment() {
         builder.setTitle("Logout")
         builder.setMessage("Do you really want to log out?")
         builder.setPositiveButton("Yes") { dialog, _ ->
-            storageHandler.removeToken("user_token")
+            storageHandler.removeAll("YAJHAZ_APP")
             action = HomeFragmentDirections.actionHomeFragmentToLogInFragment()
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.homeFragment, true)

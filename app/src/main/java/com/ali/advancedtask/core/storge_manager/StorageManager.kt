@@ -14,9 +14,15 @@ class StorageManager @Inject constructor(@ApplicationContext private val context
     override fun setToken(key: String, value: String) =
         sharedPreferences.edit().putString(key, value).apply()
 
+    override fun setString(key: String, value: String) =
+        sharedPreferences.edit().putString(key, value).apply()
+
+    override fun getString(key: String) = sharedPreferences.getString(key, null)
+
+
     override fun getToken(key: String) = sharedPreferences.getString(key, null)
 
-    override fun removeToken(key: String) = sharedPreferences.edit().remove(key).apply()
+    override fun removeAll(sharedPrefName: String) = sharedPreferences.edit().clear().apply()
 
 
 

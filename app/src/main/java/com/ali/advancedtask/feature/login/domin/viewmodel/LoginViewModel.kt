@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: LoginRepository,
-    private val storageHandler: StorageHandler
+    private val storageHandler: StorageHandler,
 ): ViewModel() {
     private var _state = MutableStateFlow(
         LoginScreenState(
@@ -44,6 +44,11 @@ class LoginViewModel @Inject constructor(
                 response.data?.token.let {token ->
                     if (token != null) {
                         storageHandler.setToken("user_token", token)
+                    }
+                }
+                response.data?.name.let {name ->
+                    if (name != null) {
+                        storageHandler.setString("user_name",name)
                     }
                 }
             }catch (e: Exception) {
