@@ -16,6 +16,19 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/fragment_login_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="center"
+                android:visibility="gone"
+                app:indicatorColor="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/fragment_login_iv_logo"
                 android:layout_width="@dimen/_120sdp"
@@ -187,17 +200,6 @@
                 app:layout_constraintStart_toEndOf="@+id/fragment_login_tv_dont_have_account"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_login_et_password"
                 tools:ignore="TextSizeCheck,TextContrastCheck" />
-
-            <CheckBox
-                android:id="@+id/fragment_login_cb_keep_me_logged_in"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_20sdp"
-                android:text="keep me Logged in"
-                android:fontFamily="@font/tt_commons_regular"
-                app:layout_constraintEnd_toEndOf="@+id/fragment_login_btn_log_in"
-                app:layout_constraintStart_toStartOf="@+id/fragment_login_btn_log_in"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_login_btn_log_in" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

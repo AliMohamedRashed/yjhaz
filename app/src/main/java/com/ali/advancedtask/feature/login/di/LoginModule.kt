@@ -9,9 +9,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 
 
+
 @Module
 @InstallIn(ViewModelComponent::class)
 object LoginModule {
+
 
     @Provides
     fun provideLoginRepository(apiService: LoginApiService): LoginRepository {

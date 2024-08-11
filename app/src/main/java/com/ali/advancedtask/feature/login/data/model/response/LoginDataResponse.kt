@@ -4,6 +4,7 @@ package com.ali.advancedtask.feature.login.data.model.response
 import com.google.gson.annotations.SerializedName
 
 data class LoginDataResponse(
+
     @SerializedName("addresses")
     val addresses: List<Any>,
     @SerializedName("balance")
@@ -24,4 +25,5 @@ data class LoginDataResponse(
     val token: String,
     @SerializedName("type")
     val type: Int
+
 )

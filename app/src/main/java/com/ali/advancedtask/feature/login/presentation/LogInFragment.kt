@@ -1,12 +1,15 @@
 package com.ali.advancedtask.feature.login.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
@@ -15,6 +18,7 @@ import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.login.data.model.request.LoginRequestDto
 import com.ali.advancedtask.feature.login.domin.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
@@ -42,61 +46,44 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeSignUpState()
+        viewLifecycleOwner.lifecycleScope.launch {
+            loginViewModel.state.collect { state ->
+                //A problem with progress bar not showing should be fixed
+                if(state.success) {binding.fragmentLoginProgressBar.visibility = View.VISIBLE}
+                if (state.success) {
+                    navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
+                }
+                state.error?.let { MainActivity.showToast(it) }
+                Log.d("User data", state.response.toString())
+            }
+        }
 
         //Go to Home Screen
         binding.fragmentLoginBtnLogIn.setOnClickListener {
-
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
-
-            val loginData = LoginRequestDto(enteredEmail,enteredPassword)
-            loginViewModel.getUserLoggedIn(loginData)
+            if (enteredEmail.isNotEmpty() && enteredPassword.isNotEmpty()) {
+                val loginData = LoginRequestDto(enteredEmail,enteredPassword)
+                loginViewModel.getUserLoggedIn(loginData)
+            } else {
+                MainActivity.showToast("All fields must be filled!")
+            }
         }
 
         //Go to Sign Up Screen
         binding.fragmentLoginTvSignUp.setOnClickListener {
-            val action = LogInFragmentDirections.actionLogInFragmentToSignUpFragment()
-            val navOptions = NavOptions.Builder()
-                .setPopUpTo(R.id.logInFragment, true)
-                .setLaunchSingleTop(true)
-                .build()
-            mNavController.navigate(action, navOptions)
+            navToDestination(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
+
         }
 
     }
-    private fun observeSignUpState() {
-        val screenState = loginViewModel.state.value
-
-        if (!screenState.response.success) {
-            MainActivity.showToast(screenState.response.message)
-        }
+    private fun navToDestination(action: NavDirections){
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.logInFragment, true)
+            .setLaunchSingleTop(true)
+            .build()
+        mNavController.navigate(action, navOptions)
     }
-//    private fun validateInputs(email: String, password: String): Boolean {
-//        return when {
-//            TextUtils.isEmpty(email) -> {
-//                MainActivity.showToast("Email cannot be empty")
-//                false
-//            }
-//
-//            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-//                MainActivity.showToast("Invalid email format")
-//                false
-//            }
-//
-//            TextUtils.isEmpty(password) -> {
-//                MainActivity.showToast("Password cannot be empty")
-//                false
-//            }
-//
-//            password.length < 8 -> {
-//                MainActivity.showToast("Password must be at least 8 characters long")
-//                false
-//            }
-//
-//            else -> true
-//        }
-//    }
 
     override fun onDestroy() {
         super.onDestroy()
