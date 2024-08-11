@@ -58,7 +58,7 @@ class SignUpFragment : Fragment() {
                 if (state.success) {
                     navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
                 }
-                state.error?.let { MainActivity.showToast(state.response.message) }
+                state.error?.let { MainActivity.showToast(it) }
             }
         }
         binding.fragmentSignupBtnSignup.setOnClickListener {
