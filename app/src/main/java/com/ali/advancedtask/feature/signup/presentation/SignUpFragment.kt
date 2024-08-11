@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
@@ -20,6 +21,7 @@ import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
 import com.ali.advancedtask.feature.signup.domain.viewmodel.SignUpViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -50,12 +52,13 @@ class SignUpFragment : Fragment() {
 
         //Sign up a new USER
         viewLifecycleOwner.lifecycleScope.launch {
-            signUpViewModel.state.collect { screenState ->
-                if (screenState.response.success) {
-                    navToHomeScreen()
-                } else if (screenState.response.message.isNotEmpty()) {
-                    MainActivity.showToast(screenState.response.message)
+            signUpViewModel.state.collect { state ->
+                //A problem with progress bar not showing should be fixed
+                binding.fragmentSignupProgressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+                if (state.success) {
+                    navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
                 }
+                state.error?.let { MainActivity.showToast(state.response.message) }
             }
         }
         binding.fragmentSignupBtnSignup.setOnClickListener {
@@ -78,21 +81,11 @@ class SignUpFragment : Fragment() {
 
         //Go To LogIn Screen
         binding.fragmentSignupTvLogin.setOnClickListener{
-            navToLogInScreen()
+            navToDestination(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
         }
     }
 
-    private fun navToLogInScreen(){
-        val action = SignUpFragmentDirections.actionSignUpFragmentToLogInFragment()
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.signUpFragment, true)
-            .setLaunchSingleTop(true)
-            .build()
-        mNavController.navigate(action,navOptions)
-    }
-
-    private fun navToHomeScreen(){
-        val action = SignUpFragmentDirections.actionSignUpFragmentToHomeFragment()
+    private fun navToDestination(action: NavDirections){
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.signUpFragment, true)
             .setLaunchSingleTop(true)

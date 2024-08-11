@@ -8,4 +8,5 @@ import retrofit2.http.POST
 interface ClientRegisterApiService {
     @POST("api/client-register")
     suspend fun registerUser(@Body request: SignUpRequestDto): SignUpResponseDto
+
 }

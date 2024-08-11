@@ -4,6 +4,7 @@ package com.ali.advancedtask.feature.signup.data.model.response
 import com.google.gson.annotations.SerializedName
 
 data class SignUpResponseDto(
+
     @SerializedName("data")
     val `data`: SignUpDataResponse?,
     @SerializedName("message")
@@ -12,4 +13,5 @@ data class SignUpResponseDto(
     val responseCode: Int,
     @SerializedName("success")
     val success: Boolean
+
 )

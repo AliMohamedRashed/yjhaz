@@ -3,7 +3,7 @@ package com.ali.advancedtask.feature.signup.domain.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ali.advancedtask.core.storge_manager.StorageHandler
-import com.ali.advancedtask.feature.signup.domain.SignUpScreenState
+import com.ali.advancedtask.feature.signup.domain.state.SignUpScreenState
 import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
 import com.ali.advancedtask.feature.signup.data.model.response.SignUpResponseDto
 import com.ali.advancedtask.feature.signup.domain.repository.SignUpRepository
@@ -24,6 +24,7 @@ class SignUpViewModel @Inject constructor(
             response = SignUpResponseDto(
                 null,"",0,false
             ),
+            success = false,
             isLoading = true,
             error = null
         )
@@ -36,18 +37,17 @@ class SignUpViewModel @Inject constructor(
                 val response = repository.registerUser(request)
                 _state.value = _state.value.copy(
                     response = response,
+                    success = response.success,
                     isLoading = false,
+                    error = response.message
                 )
-                response.data!!.token.let { token ->
-                    storageHandler.setToken("user_token", token)
+                response.data?.token.let { token ->
+                    if (token != null) {
+                        storageHandler.setToken("user_token", token)
+                    }
                 }
             } catch (e: Exception) {
-                _state.value = _state.value.copy(
-                    response = SignUpResponseDto(
-                        null, "Registration failed: ${e.message}", 0, false
-                    ),
-                    error = e.message
-                )
+                e.printStackTrace()
             }
         }
     }

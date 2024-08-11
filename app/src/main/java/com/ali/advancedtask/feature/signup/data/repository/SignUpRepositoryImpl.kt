@@ -14,8 +14,7 @@ class SignUpRepositoryImpl @Inject constructor(
 
     override suspend fun registerUser(request: SignUpRequestDto): SignUpResponseDto =
         withContext(Dispatchers.IO) {
-            val response = apiService.registerUser(request)
-            return@withContext response
+            return@withContext apiService.registerUser(request)
         }
 
 }

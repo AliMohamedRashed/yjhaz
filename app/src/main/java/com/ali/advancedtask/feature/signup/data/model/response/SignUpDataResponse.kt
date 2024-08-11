@@ -4,6 +4,7 @@ package com.ali.advancedtask.feature.signup.data.model.response
 import com.google.gson.annotations.SerializedName
 
 data class SignUpDataResponse(
+
     @SerializedName("addresses")
     val addresses: List<Any>,
     @SerializedName("balance")
@@ -24,4 +25,5 @@ data class SignUpDataResponse(
     val token: String,
     @SerializedName("type")
     val type: Int
+
 )

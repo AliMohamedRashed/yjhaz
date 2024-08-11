@@ -6,4 +6,5 @@ import com.ali.advancedtask.feature.signup.data.model.response.SignUpResponseDto
 interface SignUpRepository {
 
     suspend fun registerUser(request: SignUpRequestDto): SignUpResponseDto
+
 }
