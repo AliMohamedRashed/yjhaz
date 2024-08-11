@@ -51,7 +51,7 @@ class LogInFragment : Fragment() {
                 //A problem with progress bar not showing should be fixed
                 if(state.success) {binding.fragmentLoginProgressBar.visibility = View.VISIBLE}
                 if (state.success) {
-                    navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
+                    navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment(state.response.data!!.name))
                 }
                 state.error?.let { MainActivity.showToast(it) }
                 Log.d("User data", state.response.toString())

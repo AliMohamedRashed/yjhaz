@@ -1,7 +1,6 @@
 package com.ali.advancedtask.feature.signup.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +12,10 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
-import com.ali.advancedtask.core.storge_manager.StorageHandler
-import com.ali.advancedtask.core.storge_manager.StorageManager
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
-
 import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
 import com.ali.advancedtask.feature.signup.domain.viewmodel.SignUpViewModel
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -56,7 +50,7 @@ class SignUpFragment : Fragment() {
                 //A problem with progress bar not showing should be fixed
                 binding.fragmentSignupProgressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
                 if (state.success) {
-                    navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
+                    navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment(state.response.data!!.name))
                 }
                 state.error?.let { MainActivity.showToast(it) }
             }

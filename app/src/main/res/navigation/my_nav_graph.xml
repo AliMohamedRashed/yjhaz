@@ -35,12 +35,10 @@
         android:name="com.ali.advancedtask.feature.home.presentation.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
-        <argument
-            android:name="user_name"
-            android:defaultValue=""
-            app:argType="string" />
         <action
             android:id="@+id/action_homeFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <argument android:name="user_name"
+            app:argType="string" />
     </fragment>
 </navigation>
