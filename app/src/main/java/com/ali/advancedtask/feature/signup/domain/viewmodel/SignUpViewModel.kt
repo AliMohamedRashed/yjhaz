@@ -37,7 +37,6 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             if (request.name.isNotEmpty() && request.email.isNotEmpty() && request.phone.isNotEmpty() &&
                 request.password.isNotEmpty() && confirmPassword.isNotEmpty()) {
-
                 if (request.password == confirmPassword) {
                     val response = repository.registerUser(request)
                     _state.value = _state.value.copy(
@@ -47,8 +46,12 @@ class SignUpViewModel @Inject constructor(
                         isLoading = false
                     )
                     response.data?.let { data ->
-                        userHandler.setUserToken(data.token)
-                        userHandler.setUserName(data.name)
+                        data.token?.let { token ->
+                            userHandler.setUserToken(token)
+                        }
+                        data.name?.let { name ->
+                            userHandler.setUserName(name)
+                        }
                     }
                 } else {
                     _state.value = _state.value.copy(isLoading = false)

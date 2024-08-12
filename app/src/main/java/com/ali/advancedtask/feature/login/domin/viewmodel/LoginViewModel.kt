@@ -42,12 +42,12 @@ class LoginViewModel @Inject constructor(
                     isLoading = false,
                     error = response.message
                 )
-                response.data.let {data->
-                    if (data != null) {
-                        userHandler.setUserToken(data.token)
+                response.data?.let { data ->
+                    data.token?.let { token ->
+                        userHandler.setUserToken(token)
                     }
-                    if (data != null) {
-                        userHandler.setUserName(data.name)
+                    data.name?.let { name ->
+                        userHandler.setUserName(name)
                     }
                 }
             } else {
