@@ -25,13 +25,14 @@ class LoginViewModel @Inject constructor(
                 null, "", 0, false
             ),
             success = false,
-            isLoading = true,
+            isLoading = false,
             error = null
         )
     )
     val state: StateFlow<LoginScreenState> = _state
 
     fun getUserLoggedIn(request: LoginRequestDto) {
+        _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch {
             if (request.email.isNotEmpty() && request.password.isNotEmpty()) {
                 val response = repository.loginUser(request)
@@ -41,11 +42,16 @@ class LoginViewModel @Inject constructor(
                     isLoading = false,
                     error = response.message
                 )
-                response.data?.let {data->
-                    userHandler.setUserToken(data.token)
-                    userHandler.setUserName(data.name)
+                response.data.let {data->
+                    if (data != null) {
+                        userHandler.setUserToken(data.token)
+                    }
+                    if (data != null) {
+                        userHandler.setUserName(data.name)
+                    }
                 }
             } else {
+                _state.value = _state.value.copy(isLoading = false)
                 MainActivity.showToast("All fields must be filled!")
             }
         }

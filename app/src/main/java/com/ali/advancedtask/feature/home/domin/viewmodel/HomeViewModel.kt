@@ -27,53 +27,24 @@ class HomeViewModel @Inject constructor(
     )
     val state: StateFlow<HomeScreenState> = _state
 
-    fun fetchCategories() {
+    fun fetchCategoriesPopularTrendingData() {
+        _state.value = _state.value.copy(isLoading = true)
+
         viewModelScope.launch {
             try {
-                val response = repository.getCategories()
+                val categoriesResponse = repository.getCategories()
+                val popularSellersResponse = repository.getPopularSellers(29.1931, 30.6421, 1)
+                val trendingSellersResponse = repository.getTrendingSellers(29.1931, 30.6421, 1)
+
                 _state.value = _state.value.copy(
-                    baseCategories = response.data!!,
-                    success = response.success,
-                    isLoading = false,
-                    error = response.message
+                    baseCategories = categoriesResponse.data!!,
+                    popularSellers = popularSellersResponse.data,
+                    trendingSellers = trendingSellersResponse.data,
+                    success = categoriesResponse.success && popularSellersResponse.success && trendingSellersResponse.success,
+                    error = categoriesResponse.message + popularSellersResponse.message + trendingSellersResponse.message
                 )
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    fun fetchPopularSellers() {
-        viewModelScope.launch {
-            try {
-                val response = repository.getPopularSellers(29.1931,30.6421,1)
-                _state.value = _state.value.copy(
-                    popularSellers = response.data,
-                    success = response.success,
-                    isLoading = false,
-                    error = response.message
-                )
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    fun fetchTrendingSellers() {
-        viewModelScope.launch {
-            try {
-                val response = repository.getTrendingSellers(29.1931,30.6421,1)
-                _state.value = _state.value.copy(
-                    trendingSellers = response.data,
-                    success = response.success,
-                    isLoading = false,
-                    error = response.message
-                )
-
-            } catch (e: Exception) {
-                e.printStackTrace()
+            } finally {
+                _state.value = _state.value.copy(isLoading = false)
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.ali.advancedtask.feature.home.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,11 +74,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        homeViewModel.fetchCategories()
-        homeViewModel.fetchPopularSellers()
-        homeViewModel.fetchTrendingSellers()
-
+        homeViewModel.fetchCategoriesPopularTrendingData()
         viewLifecycleOwner.lifecycleScope.launch {
             homeViewModel.state.collect { state ->
                 categoriesAdapter = CategoryAdapter(state.baseCategories)
@@ -90,6 +85,10 @@ class HomeFragment : Fragment() {
 
                 trendingAdapter = TrendingAdapter(state.trendingSellers)
                 binding.fragmentHomeRvTrending.adapter = trendingAdapter
+
+                if (state.isLoading) binding.fragmentHomeProgressBar.visibility = View.VISIBLE
+                else binding.fragmentHomeProgressBar.visibility = View.GONE
+
             }
         }
 

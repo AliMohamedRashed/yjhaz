@@ -12,14 +12,12 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
-import com.ali.advancedtask.core.storge_manager.StorageHandler
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
 import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
 import com.ali.advancedtask.feature.signup.domain.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
@@ -48,12 +46,11 @@ class SignUpFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             signUpViewModel.state.collect { state ->
-                //A problem with progress bar not showing should be fixed
-                binding.fragmentSignupProgressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
                 if (state.success) {
                     navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
                 }
                 state.error?.let { MainActivity.showToast(it) }
+                binding.fragmentSignupProgressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
             }
         }
         binding.fragmentSignupBtnSignup.setOnClickListener {

@@ -48,16 +48,14 @@ class LogInFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             loginViewModel.state.collect { state ->
-                //A problem with progress bar not showing should be fixed
-                if(state.success) {binding.fragmentLoginProgressBar.visibility = View.VISIBLE}
                 if (state.success) {
                     navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
                 }
                 state.error?.let { MainActivity.showToast(it) }
+                binding.fragmentLoginProgressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
             }
         }
 
-        //Go to Home Screen
         binding.fragmentLoginBtnLogIn.setOnClickListener {
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
@@ -65,7 +63,6 @@ class LogInFragment : Fragment() {
             loginViewModel.getUserLoggedIn(loginData)
         }
 
-        //Go to Sign Up Screen
         binding.fragmentLoginTvSignUp.setOnClickListener {
             navToDestination(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
 
