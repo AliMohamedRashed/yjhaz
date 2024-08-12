@@ -5,6 +5,7 @@
     import com.ali.advancedtask.core.remote_services.LoginApiService
     import com.ali.advancedtask.core.remote_services.PopularSellersApiService
     import com.ali.advancedtask.core.remote_services.TrendingSellersApiService
+    import com.ali.advancedtask.core.user_manager.UserHandler
     import dagger.Module
     import dagger.Provides
     import dagger.hilt.InstallIn
@@ -16,12 +17,14 @@
     import retrofit2.converter.gson.GsonConverterFactory
     import javax.inject.Singleton
 
+
     @Module
     @InstallIn(SingletonComponent::class)
     object NetworkModule {
+
         @Provides
         @Singleton
-        fun provideRetrofit(): Retrofit {
+        fun provideRetrofit(userHandler: UserHandler): Retrofit {
             val loggingInterceptor = HttpLoggingInterceptor()
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -30,14 +33,13 @@
                 val requestBuilder = originalRequest.newBuilder()
                     .addHeader("Content-Type", "application/json")
                     .addHeader("Accept", "application/json")
-                    .build()
 
-//            val token = SharedPreferencesHelper.getToken(context)
-//            if (token != null) {
-//                requestBuilder.addHeader("Authorization", "Bearer $token")
-//            }
+            val token = userHandler.getUserToken()
+            if (token != null) {
+                requestBuilder.addHeader("Authorization", "Bearer $token")
+            }
 
-                return@Interceptor chain.proceed(requestBuilder)
+                return@Interceptor chain.proceed(requestBuilder.build())
             }
 
             val okHttpClient = OkHttpClient.Builder()
