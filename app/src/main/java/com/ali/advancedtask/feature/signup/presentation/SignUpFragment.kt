@@ -46,7 +46,6 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Sign up a new USER
         viewLifecycleOwner.lifecycleScope.launch {
             signUpViewModel.state.collect { state ->
                 //A problem with progress bar not showing should be fixed
@@ -63,15 +62,10 @@ class SignUpFragment : Fragment() {
             val enteredPhoneNumber = binding.fragmentSignupEtPhoneNumber.text.toString()
             val enteredPassword = binding.fragmentSignupEtPassword.text.toString()
             val enteredConfirmedPassword = binding.fragmentSignupEtConfirmPassword.text.toString()
-            if (enteredPassword == enteredConfirmedPassword) {
-                val newUser = SignUpRequestDto(enteredName, enteredEmail, enteredPhoneNumber, enteredPassword)
-                signUpViewModel.registerNewUser(newUser)
-            } else {
-                MainActivity.showToast("The entered password must be the same!")
-            }
+            val newUser = SignUpRequestDto(enteredName, enteredEmail, enteredPhoneNumber, enteredPassword)
+            signUpViewModel.registerNewUser(newUser,enteredConfirmedPassword)
         }
 
-        //Go To LogIn Screen
         binding.fragmentSignupTvLogin.setOnClickListener{
             navToDestination(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
         }

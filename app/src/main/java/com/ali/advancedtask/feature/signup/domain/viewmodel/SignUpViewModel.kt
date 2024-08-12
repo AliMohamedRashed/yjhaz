@@ -32,19 +32,23 @@ class SignUpViewModel @Inject constructor(
     )
     val state: StateFlow<SignUpScreenState> = _state
 
-    fun registerNewUser(request: SignUpRequestDto) {
+    fun registerNewUser(request: SignUpRequestDto,confirmPassword:String) {
         viewModelScope.launch {
-            if (request.name.isNotEmpty() && request.email.isNotEmpty() && request.phone.isNotEmpty() && request.password.isNotEmpty()) {
-                val response = repository.registerUser(request)
-                _state.value = _state.value.copy(
-                    response = response,
-                    success = response.success,
-                    isLoading = false,
-                    error = response.message
-                )
-                response.data?.let {data->
-                    userHandler.setUserToken(data.token)
-                    userHandler.setUserName(data.name)
+            if (request.name.isNotEmpty() && request.email.isNotEmpty() && request.phone.isNotEmpty() && request.password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+                if (request.password == confirmPassword) {
+                    val response = repository.registerUser(request)
+                    _state.value = _state.value.copy(
+                        response = response,
+                        success = response.success,
+                        isLoading = false,
+                        error = response.message
+                    )
+                    response.data?.let {data->
+                        userHandler.setUserToken(data.token)
+                        userHandler.setUserName(data.name)
+                    }
+                } else {
+                    MainActivity.showToast("The entered password must be the same!")
                 }
             } else {
                 MainActivity.showToast("All fields must be filled!")
