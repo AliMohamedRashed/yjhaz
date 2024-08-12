@@ -12,14 +12,12 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
-import com.ali.advancedtask.core.storge_manager.StorageHandler
 import com.ali.advancedtask.databinding.FragmentLogInBinding
 import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.login.data.model.request.LoginRequestDto
 import com.ali.advancedtask.feature.login.domin.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
@@ -63,12 +61,8 @@ class LogInFragment : Fragment() {
         binding.fragmentLoginBtnLogIn.setOnClickListener {
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
-            if (enteredEmail.isNotEmpty() && enteredPassword.isNotEmpty()) {
-                val loginData = LoginRequestDto(enteredEmail,enteredPassword)
-                loginViewModel.getUserLoggedIn(loginData)
-            } else {
-                MainActivity.showToast("All fields must be filled!")
-            }
+            val loginData = LoginRequestDto(enteredEmail,enteredPassword)
+            loginViewModel.getUserLoggedIn(loginData)
         }
 
         //Go to Sign Up Screen

@@ -2,7 +2,8 @@ package com.ali.advancedtask.feature.signup.domain.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ali.advancedtask.core.storge_manager.StorageHandler
+import com.ali.advancedtask.core.user_manager.UserHandler
+import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.signup.domain.state.SignUpScreenState
 import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
 import com.ali.advancedtask.feature.signup.data.model.response.SignUpResponseDto
@@ -16,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val repository: SignUpRepository,
-    private val storageHandler: StorageHandler,
+    private val userHandler: UserHandler,
 ): ViewModel() {
 
     private var _state = MutableStateFlow(
@@ -33,7 +34,7 @@ class SignUpViewModel @Inject constructor(
 
     fun registerNewUser(request: SignUpRequestDto) {
         viewModelScope.launch {
-            try {
+            if (request.name.isNotEmpty() && request.email.isNotEmpty() && request.phone.isNotEmpty() && request.password.isNotEmpty()) {
                 val response = repository.registerUser(request)
                 _state.value = _state.value.copy(
                     response = response,
@@ -41,18 +42,12 @@ class SignUpViewModel @Inject constructor(
                     isLoading = false,
                     error = response.message
                 )
-                response.data?.token.let { token ->
-                    if (token != null) {
-                        storageHandler.setToken("user_token", token)
-                    }
+                response.data?.let {data->
+                    userHandler.setUserToken(data.token)
+                    userHandler.setUserName(data.name)
                 }
-                response.data?.name.let {name ->
-                    if (name != null) {
-                        storageHandler.setString("user_name",name)
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            } else {
+                MainActivity.showToast("All fields must be filled!")
             }
         }
     }

@@ -93,10 +93,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        Log.d("User Token",storageHandler.getToken("user_token")!!)
-        Log.d("User Name",storageHandler.getString("user_name")!!)
-
-
         binding.fragmentHomeIvBackButton.setOnClickListener {
             showLogoutConfirmationDialog()
         }
@@ -106,7 +102,7 @@ class HomeFragment : Fragment() {
     private fun showLogoutConfirmationDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Logout")
-        builder.setMessage("Do you really want to log out?")
+        builder.setMessage("Do you want to log out?")
         builder.setPositiveButton("Yes") { dialog, _ ->
             storageHandler.removeAll("YAJHAZ_APP")
             action = HomeFragmentDirections.actionHomeFragmentToLogInFragment()

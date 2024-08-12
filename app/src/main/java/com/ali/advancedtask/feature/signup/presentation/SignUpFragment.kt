@@ -64,12 +64,8 @@ class SignUpFragment : Fragment() {
             val enteredPassword = binding.fragmentSignupEtPassword.text.toString()
             val enteredConfirmedPassword = binding.fragmentSignupEtConfirmPassword.text.toString()
             if (enteredPassword == enteredConfirmedPassword) {
-                if (enteredName.isNotEmpty() && enteredEmail.isNotEmpty() && enteredPhoneNumber.isNotEmpty()) {
-                    val newUser = SignUpRequestDto(enteredName, enteredEmail, enteredPhoneNumber, enteredPassword)
-                    signUpViewModel.registerNewUser(newUser)
-                } else {
-                    MainActivity.showToast("All fields must be filled!")
-                }
+                val newUser = SignUpRequestDto(enteredName, enteredEmail, enteredPhoneNumber, enteredPassword)
+                signUpViewModel.registerNewUser(newUser)
             } else {
                 MainActivity.showToast("The entered password must be the same!")
             }

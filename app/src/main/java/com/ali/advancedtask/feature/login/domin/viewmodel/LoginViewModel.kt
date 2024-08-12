@@ -1,9 +1,9 @@
-
 package com.ali.advancedtask.feature.login.domin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ali.advancedtask.core.storge_manager.StorageHandler
+import com.ali.advancedtask.core.user_manager.UserHandler
+import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.login.data.model.request.LoginRequestDto
 import com.ali.advancedtask.feature.login.data.model.response.LoginResponseDto
 import com.ali.advancedtask.feature.login.domin.state.LoginScreenState
@@ -17,12 +17,12 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: LoginRepository,
-    private val storageHandler: StorageHandler,
-): ViewModel() {
+    private val userHandler: UserHandler,
+) : ViewModel() {
     private var _state = MutableStateFlow(
         LoginScreenState(
             response = LoginResponseDto(
-                null,"",0,false
+                null, "", 0, false
             ),
             success = false,
             isLoading = true,
@@ -31,30 +31,23 @@ class LoginViewModel @Inject constructor(
     )
     val state: StateFlow<LoginScreenState> = _state
 
-    fun getUserLoggedIn(request: LoginRequestDto){
+    fun getUserLoggedIn(request: LoginRequestDto) {
         viewModelScope.launch {
-            try {
+            if (request.email.isNotEmpty() && request.password.isNotEmpty()) {
                 val response = repository.loginUser(request)
                 _state.value = _state.value.copy(
-                    response= response,
+                    response = response,
                     success = response.success,
                     isLoading = false,
                     error = response.message
                 )
-                response.data?.token.let {token ->
-                    if (token != null) {
-                        storageHandler.setToken("user_token", token)
-                    }
+                response.data?.let {data->
+                    userHandler.setUserToken(data.token)
+                    userHandler.setUserName(data.name)
                 }
-                response.data?.name.let {name ->
-                    if (name != null) {
-                        storageHandler.setString("user_name",name)
-                    }
-                }
-            }catch (e: Exception) {
-                e.printStackTrace()
+            } else {
+                MainActivity.showToast("All fields must be filled!")
             }
-
         }
     }
 }
