@@ -12,6 +12,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
+import com.ali.advancedtask.core.State
 import com.ali.advancedtask.databinding.FragmentLogInBinding
 import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.login.data.model.request.LoginRequestDto
@@ -48,11 +49,20 @@ class LogInFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             loginViewModel.state.collect { state ->
-                if (state.success) {
-                    navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
+                when (state) {
+                    is State.Loading -> binding.fragmentLoginProgressBar.visibility = View.VISIBLE
+                    is State.Success -> {
+                        binding.fragmentLoginProgressBar.visibility = View.GONE
+                        if (state.data.success) {
+                            navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
+                        }
+                    }
+                    is State.Error -> {
+                        binding.fragmentLoginProgressBar.visibility = View.GONE
+                        MainActivity.showToast(state.exception.message ?: "An error occurred")
+                    }
+                    null -> binding.fragmentLoginProgressBar.visibility = View.GONE
                 }
-                state.error?.let { MainActivity.showToast(it) }
-                binding.fragmentLoginProgressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
             }
         }
 
