@@ -43,7 +43,7 @@ class SignUpViewModel @Inject constructor(
                 )
                 response.data?.token.let { token ->
                     if (token != null) {
-                        storageHandler.setToken("user_token", token)
+                        storageHandler.setString("user_token", token)
                     }
                 }
             } catch (e: Exception) {
