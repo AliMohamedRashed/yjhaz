@@ -1,7 +1,6 @@
 package com.ali.advancedtask.feature.login.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
+import com.ali.advancedtask.core.State
 import com.ali.advancedtask.databinding.FragmentLogInBinding
 import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.login.data.model.request.LoginRequestDto
@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LogInFragment : Fragment() {
     private val loginViewModel: LoginViewModel by viewModels()
+
 
     private var _binding: FragmentLogInBinding? = null
     private val binding get() = _binding!!
@@ -48,29 +49,30 @@ class LogInFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             loginViewModel.state.collect { state ->
-                //A problem with progress bar not showing should be fixed
-                if(state.success) {binding.fragmentLoginProgressBar.visibility = View.VISIBLE}
-                if (state.success) {
-                    navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
+                when (state) {
+                    is State.Loading -> binding.fragmentLoginProgressBar.visibility = View.VISIBLE
+                    is State.Success -> {
+                        binding.fragmentLoginProgressBar.visibility = View.GONE
+                        if (state.data.success) {
+                            navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
+                        }
+                    }
+                    is State.Error -> {
+                        binding.fragmentLoginProgressBar.visibility = View.GONE
+                        MainActivity.showToast(state.exception.message ?: "An error occurred")
+                    }
+                    null -> binding.fragmentLoginProgressBar.visibility = View.GONE
                 }
-                state.error?.let { MainActivity.showToast(it) }
-                Log.d("User data", state.response.toString())
             }
         }
 
-        //Go to Home Screen
         binding.fragmentLoginBtnLogIn.setOnClickListener {
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
-            if (enteredEmail.isNotEmpty() && enteredPassword.isNotEmpty()) {
-                val loginData = LoginRequestDto(enteredEmail,enteredPassword)
-                loginViewModel.getUserLoggedIn(loginData)
-            } else {
-                MainActivity.showToast("All fields must be filled!")
-            }
+            val loginData = LoginRequestDto(enteredEmail,enteredPassword)
+            loginViewModel.getUserLoggedIn(loginData)
         }
 
-        //Go to Sign Up Screen
         binding.fragmentLoginTvSignUp.setOnClickListener {
             navToDestination(LogInFragmentDirections.actionLogInFragmentToSignUpFragment())
 
