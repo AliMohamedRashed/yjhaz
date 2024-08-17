@@ -12,8 +12,10 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.ali.advancedtask.R
+import com.ali.advancedtask.core.State
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
 import com.ali.advancedtask.feature.activities.MainActivity
+import com.ali.advancedtask.feature.login.presentation.LogInFragmentDirections
 import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
 import com.ali.advancedtask.feature.signup.domain.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,11 +48,20 @@ class SignUpFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             signUpViewModel.state.collect { state ->
-                if (state.success) {
-                    navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
+                when (state) {
+                    is State.Loading -> binding.fragmentSignupProgressBar.visibility =  View.VISIBLE
+                    is State.Success -> {
+                        binding.fragmentSignupProgressBar.visibility = View.GONE
+                        if (state.data.success) {
+                            navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
+                        }
+                    }
+                    is State.Error -> {
+                        binding.fragmentSignupProgressBar.visibility = View.GONE
+                        MainActivity.showToast(state.exception.message ?: "An error occurred")
+                    }
+                    null -> binding.fragmentSignupProgressBar.visibility = View.GONE
                 }
-                state.error?.let { MainActivity.showToast(it) }
-                binding.fragmentSignupProgressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
             }
         }
         binding.fragmentSignupBtnSignup.setOnClickListener {

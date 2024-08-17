@@ -2,15 +2,15 @@ package com.ali.advancedtask.feature.signup.domain.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ali.advancedtask.core.State
 import com.ali.advancedtask.core.user_manager.UserHandler
 import com.ali.advancedtask.feature.activities.MainActivity
-import com.ali.advancedtask.feature.signup.domain.state.SignUpScreenState
 import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
 import com.ali.advancedtask.feature.signup.data.model.response.SignUpResponseDto
 import com.ali.advancedtask.feature.signup.domain.repository.SignUpRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,45 +20,31 @@ class SignUpViewModel @Inject constructor(
     private val userHandler: UserHandler,
 ): ViewModel() {
 
-    private var _state = MutableStateFlow(
-        SignUpScreenState(
-            response = SignUpResponseDto(
-                null,"",0,false
-            ),
-            success = false,
-            isLoading = false,
-            error = null
-        )
-    )
-    val state: StateFlow<SignUpScreenState> = _state
+    private var _state = MutableStateFlow<State<SignUpResponseDto>?>(null)
+    val state = _state.asStateFlow()
 
     fun registerNewUser(request: SignUpRequestDto, confirmPassword: String) {
-        _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch {
             if (request.name.isNotEmpty() && request.email.isNotEmpty() && request.phone.isNotEmpty() &&
                 request.password.isNotEmpty() && confirmPassword.isNotEmpty()) {
                 if (request.password == confirmPassword) {
-                    val response = repository.registerUser(request)
-                    _state.value = _state.value.copy(
-                        response = response,
-                        success = response.success,
-                        error = response.message,
-                        isLoading = false
-                    )
-                    response.data?.let { data ->
-                        data.token?.let { token ->
-                            userHandler.setUserToken(token)
-                        }
-                        data.name?.let { name ->
-                            userHandler.setUserName(name)
+                    repository.registerUser(request).collect{ state ->
+                        _state.value = state
+                        if(state is State.Success ) {
+                            if(state.data.success){
+                                userHandler.run {
+                                    setUserToken(state.data.data!!.token)
+                                    setUserName(state.data.data.name)
+                                }
+                            }else{
+                                MainActivity.showToast(state.data.message )
+                            }
                         }
                     }
                 } else {
-                    _state.value = _state.value.copy(isLoading = false)
                     MainActivity.showToast("The entered password must be the same!")
                 }
             } else {
-                _state.value = _state.value.copy(isLoading = false)
                 MainActivity.showToast("All fields must be filled!")
             }
         }
