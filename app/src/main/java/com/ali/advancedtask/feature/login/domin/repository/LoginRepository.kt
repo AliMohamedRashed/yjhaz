@@ -8,4 +8,6 @@ import kotlinx.coroutines.flow.Flow
 interface LoginRepository {
 
     suspend fun loginUser(request: LoginRequestDto): Flow<State<LoginResponseDto>>
+
+    suspend fun cacheUserData(loginData: LoginResponseDto)
 }

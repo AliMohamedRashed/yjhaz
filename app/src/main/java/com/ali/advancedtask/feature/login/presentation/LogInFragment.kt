@@ -55,6 +55,8 @@ class LogInFragment : Fragment() {
                         binding.fragmentLoginProgressBar.visibility = View.GONE
                         if (state.data.success) {
                             navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
+                        }else{
+                            MainActivity.showToast(state.data.message )
                         }
                     }
                     is State.Error -> {
