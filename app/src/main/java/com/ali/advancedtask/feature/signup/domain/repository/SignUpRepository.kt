@@ -9,4 +9,6 @@ interface SignUpRepository {
 
     suspend fun registerUser(request: SignUpRequestDto): Flow<State<SignUpResponseDto>>
 
+    suspend fun cacheUserData(registerData: SignUpResponseDto)
+
 }

@@ -1,6 +1,7 @@
 package com.ali.advancedtask.feature.signup.di
 
 import com.ali.advancedtask.core.remote_services.ClientRegisterApiService
+import com.ali.advancedtask.core.user_manager.UserHandler
 import com.ali.advancedtask.feature.signup.data.repository.SignUpRepositoryImpl
 import com.ali.advancedtask.feature.signup.domain.repository.SignUpRepository
 import dagger.Module
@@ -14,8 +15,8 @@ import dagger.hilt.android.components.ViewModelComponent
 object SignupModule {
 
     @Provides
-    fun provideSignUpRepository(apiService: ClientRegisterApiService): SignUpRepository {
-        return SignUpRepositoryImpl(apiService)
+    fun provideSignUpRepository(apiService: ClientRegisterApiService,userHandler: UserHandler): SignUpRepository {
+        return SignUpRepositoryImpl(apiService,userHandler)
     }
 
 }

@@ -15,8 +15,8 @@ import com.ali.advancedtask.R
 import com.ali.advancedtask.core.State
 import com.ali.advancedtask.databinding.FragmentSignUpBinding
 import com.ali.advancedtask.feature.activities.MainActivity
-import com.ali.advancedtask.feature.login.presentation.LogInFragmentDirections
 import com.ali.advancedtask.feature.signup.data.model.request.SignUpRequestDto
+import com.ali.advancedtask.feature.signup.domain.validation.ValidationResult
 import com.ali.advancedtask.feature.signup.domain.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -54,6 +54,8 @@ class SignUpFragment : Fragment() {
                         binding.fragmentSignupProgressBar.visibility = View.GONE
                         if (state.data.success) {
                             navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
+                        }else{
+                            MainActivity.showToast(state.data.message)
                         }
                     }
                     is State.Error -> {
@@ -71,11 +73,27 @@ class SignUpFragment : Fragment() {
             val enteredPassword = binding.fragmentSignupEtPassword.text.toString()
             val enteredConfirmedPassword = binding.fragmentSignupEtConfirmPassword.text.toString()
             val newUser = SignUpRequestDto(enteredName, enteredEmail, enteredPhoneNumber, enteredPassword)
-            signUpViewModel.registerNewUser(newUser,enteredConfirmedPassword)
+            val validationResult = signUpViewModel.validateInputs(newUser, enteredConfirmedPassword)
+            handleValidationResult(validationResult, newUser)
         }
 
         binding.fragmentSignupTvLogin.setOnClickListener{
             navToDestination(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
+        }
+    }
+
+    private fun handleValidationResult(validationResult: ValidationResult, newUser: SignUpRequestDto) {
+        when (validationResult) {
+            ValidationResult.SUCCESS -> signUpViewModel.registerNewUser(newUser)
+            ValidationResult.EMPTY_NAME -> MainActivity.showToast("Name cannot be empty")
+            ValidationResult.NAME_TOO_SHORT -> MainActivity.showToast("Name must be at least 14 characters long")
+            ValidationResult.INVALID_EMAIL -> MainActivity.showToast("Invalid email format")
+            ValidationResult.EMPTY_PHONE -> MainActivity.showToast("Phone number cannot be empty")
+            ValidationResult.PHONE_TOO_SHORT -> MainActivity.showToast("Phone number must be at least 11 characters long")
+            ValidationResult.EMPTY_PASSWORD -> MainActivity.showToast("Password cannot be empty")
+            ValidationResult.PASSWORD_TOO_SHORT -> MainActivity.showToast("Password must be at least 6 characters long")
+            ValidationResult.EMPTY_CONFIRM_PASSWORD -> MainActivity.showToast("Please confirm your password")
+            ValidationResult.PASSWORD_MISMATCH -> MainActivity.showToast("Passwords do not match")
         }
     }
 
