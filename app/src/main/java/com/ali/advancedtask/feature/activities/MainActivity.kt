@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.ali.advancedtask.R
 import com.ali.advancedtask.YajhazApplication
-import com.ali.advancedtask.core.storge_manager.StorageHandler
+import com.ali.advancedtask.core.user_manager.UserHandler
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var storageHandler: StorageHandler
+    lateinit var userHandler: UserHandler
 
     companion object {
         fun showToast(message: String) {
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        if (!storageHandler.getToken("user_token").isNullOrEmpty()) {
+        if (!userHandler.getUserToken().isNullOrEmpty()) {
             navController.navigate(R.id.homeFragment, null, getNavOptions(R.id.homeFragment))
         } else {
             navController.navigate(R.id.logInFragment, null, getNavOptions(R.id.logInFragment))
