@@ -16,6 +16,7 @@ import com.ali.advancedtask.core.State
 import com.ali.advancedtask.databinding.FragmentLogInBinding
 import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.login.data.model.request.LoginRequestDto
+import com.ali.advancedtask.feature.login.domin.validation.ValidationResult
 import com.ali.advancedtask.feature.login.domin.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -55,6 +56,8 @@ class LogInFragment : Fragment() {
                         binding.fragmentLoginProgressBar.visibility = View.GONE
                         if (state.data.success) {
                             navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
+                        }else{
+                            MainActivity.showToast(state.data.message )
                         }
                     }
                     is State.Error -> {
@@ -70,7 +73,8 @@ class LogInFragment : Fragment() {
             val enteredEmail = binding.fragmentLoginEtEmail.text.toString()
             val enteredPassword = binding.fragmentLoginEtPassword.text.toString()
             val loginData = LoginRequestDto(enteredEmail,enteredPassword)
-            loginViewModel.getUserLoggedIn(loginData)
+            val validationResult = loginViewModel.validateInputs(loginData)
+            handleValidationResult(validationResult, loginData)
         }
 
         binding.fragmentLoginTvSignUp.setOnClickListener {
@@ -79,6 +83,15 @@ class LogInFragment : Fragment() {
         }
 
     }
+
+    private fun handleValidationResult(validationResult: ValidationResult, loginData: LoginRequestDto) {
+        when (validationResult) {
+            ValidationResult.SUCCESS ->  loginViewModel.getUserLoggedIn(loginData)
+            ValidationResult.INVALID_EMAIL -> MainActivity.showToast("Invalid email format")
+            ValidationResult.EMPTY_PASSWORD -> MainActivity.showToast("Password cannot be empty")
+        }
+    }
+
     private fun navToDestination(action: NavDirections){
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.logInFragment, true)
