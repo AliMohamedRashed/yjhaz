@@ -14,8 +14,11 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ali.advancedtask.R
+import com.ali.advancedtask.core.State
 import com.ali.advancedtask.core.storge_manager.StorageHandler
+import com.ali.advancedtask.core.user_manager.UserHandler
 import com.ali.advancedtask.databinding.FragmentHomeBinding
+import com.ali.advancedtask.feature.activities.MainActivity
 import com.ali.advancedtask.feature.home.domin.viewmodel.HomeViewModel
 import com.ali.advancedtask.feature.home.presentation.adapters.CategoryAdapter
 import com.ali.advancedtask.feature.home.presentation.adapters.PopularAdapter
@@ -26,6 +29,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+    @Inject
+    lateinit var userHandler: UserHandler
     @Inject
     lateinit var storageHandler: StorageHandler
 
@@ -50,9 +55,9 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.fragmentHomeTvUserName.text = "Hello ${
-            (storageHandler.getString("user_name"))?.split(" ")?.first()
-        }"
+        val firstName = userHandler.getUserName()?.substringBefore(" ").orEmpty()
+        val greetingMessage = getString(R.string.greeting_message, firstName)
+        binding.fragmentHomeTvUserName.text = greetingMessage
 
         categoriesAdapter = CategoryAdapter(emptyList())
         binding.fragmentHomeRvCategory.layoutManager =
@@ -77,17 +82,27 @@ class HomeFragment : Fragment() {
         homeViewModel.fetchCategoriesPopularTrendingData()
         viewLifecycleOwner.lifecycleScope.launch {
             homeViewModel.state.collect { state ->
-                categoriesAdapter = CategoryAdapter(state.baseCategories)
-                binding.fragmentHomeRvCategory.adapter = categoriesAdapter
-
-                popularAdapter = PopularAdapter(state.popularSellers)
-                binding.fragmentHomeRvPopular.adapter = popularAdapter
-
-                trendingAdapter = TrendingAdapter(state.trendingSellers)
-                binding.fragmentHomeRvTrending.adapter = trendingAdapter
-
-                if (state.isLoading) binding.fragmentHomeProgressBar.visibility = View.VISIBLE
-                else binding.fragmentHomeProgressBar.visibility = View.GONE
+                when (state) {
+                    is State.Loading -> binding.fragmentHomeProgressBar.visibility =  View.VISIBLE
+                    is State.Success -> {
+                        binding.fragmentHomeProgressBar.visibility = View.GONE
+                        if (state.data.baseCategoriesResponseDto.success && state.data.popularSellersResponseDto.success && state.data.trendingSellersResponseDto.success) {
+                            categoriesAdapter = CategoryAdapter(state.data.baseCategoriesResponseDto.data!!)
+                            binding.fragmentHomeRvCategory.adapter = categoriesAdapter
+                            popularAdapter = PopularAdapter(state.data.popularSellersResponseDto.data)
+                            binding.fragmentHomeRvPopular.adapter = popularAdapter
+                            trendingAdapter = TrendingAdapter(state.data.trendingSellersResponseDto.data)
+                            binding.fragmentHomeRvTrending.adapter = trendingAdapter
+                        } else{
+                            MainActivity.showToast("Error!")
+                        }
+                    }
+                    is State.Error -> {
+                        binding.fragmentHomeProgressBar.visibility = View.GONE
+                        MainActivity.showToast(state.exception.message ?: "An error occurred")
+                    }
+                    null -> binding.fragmentHomeProgressBar.visibility = View.GONE
+                }
 
             }
         }
