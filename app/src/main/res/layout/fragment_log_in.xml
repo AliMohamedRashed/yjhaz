@@ -17,18 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ProgressBar
-                android:id="@+id/fragment_login_progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:foregroundGravity="center"
-                android:indeterminate="true"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_login_iv_logo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <ImageView
                 android:id="@+id/fragment_login_iv_logo"
                 android:layout_width="@dimen/_120sdp"

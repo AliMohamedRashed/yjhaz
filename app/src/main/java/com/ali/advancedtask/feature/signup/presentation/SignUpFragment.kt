@@ -1,5 +1,6 @@
 package com.ali.advancedtask.feature.signup.presentation
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,6 +31,8 @@ class SignUpFragment : Fragment() {
 
     private lateinit var mNavController: NavController
 
+    private lateinit var loadingDialog: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,6 +43,11 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
+
+        loadingDialog = Dialog(requireContext())
+        loadingDialog.setContentView(R.layout.custom_loader_layout)
+        loadingDialog.setCancelable(false)
+
         return binding.root
     }
 
@@ -49,9 +57,9 @@ class SignUpFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             signUpViewModel.state.collect { state ->
                 when (state) {
-                    is State.Loading -> binding.fragmentSignupProgressBar.visibility =  View.VISIBLE
+                    is State.Loading -> loadingDialog.show()
                     is State.Success -> {
-                        binding.fragmentSignupProgressBar.visibility = View.GONE
+                        loadingDialog.dismiss()
                         if (state.data.success) {
                             navToDestination(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
                         }else{
@@ -59,10 +67,10 @@ class SignUpFragment : Fragment() {
                         }
                     }
                     is State.Error -> {
-                        binding.fragmentSignupProgressBar.visibility = View.GONE
+                        loadingDialog.dismiss()
                         MainActivity.showToast(state.exception.message ?: "An error occurred")
                     }
-                    null -> binding.fragmentSignupProgressBar.visibility = View.GONE
+                    null ->  loadingDialog.dismiss()
                 }
             }
         }

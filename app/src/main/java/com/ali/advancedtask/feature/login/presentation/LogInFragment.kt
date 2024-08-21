@@ -1,5 +1,6 @@
 package com.ali.advancedtask.feature.login.presentation
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ class LogInFragment : Fragment() {
 
     private lateinit var mNavController: NavController
 
+    private lateinit var loadingDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,11 @@ class LogInFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLogInBinding.inflate(inflater, container, false)
+
+        loadingDialog = Dialog(requireContext())
+        loadingDialog.setContentView(R.layout.custom_loader_layout)
+        loadingDialog.setCancelable(false)
+
         return binding.root
     }
 
@@ -51,9 +58,9 @@ class LogInFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             loginViewModel.state.collect { state ->
                 when (state) {
-                    is State.Loading -> binding.fragmentLoginProgressBar.visibility = View.VISIBLE
+                    is State.Loading -> loadingDialog.show()
                     is State.Success -> {
-                        binding.fragmentLoginProgressBar.visibility = View.GONE
+                        loadingDialog.dismiss()
                         if (state.data.success) {
                             navToDestination(LogInFragmentDirections.actionLogInFragmentToHomeFragment())
                         }else{
@@ -61,10 +68,10 @@ class LogInFragment : Fragment() {
                         }
                     }
                     is State.Error -> {
-                        binding.fragmentLoginProgressBar.visibility = View.GONE
+                        loadingDialog.dismiss()
                         MainActivity.showToast(state.exception.message ?: "An error occurred")
                     }
-                    null -> binding.fragmentLoginProgressBar.visibility = View.GONE
+                    null -> loadingDialog.dismiss()
                 }
             }
         }
