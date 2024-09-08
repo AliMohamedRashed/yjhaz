@@ -7,7 +7,10 @@ import com.ali.advancedtask.databinding.CustomPopularLayoutBinding
 import com.ali.advancedtask.feature.home.data.model.response.popular_sellers.PopularSellersDataResponse
 import com.squareup.picasso.Picasso
 
-class PopularAdapter(private var sellers: List<PopularSellersDataResponse>) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
+class PopularAdapter(
+    private var sellers: List<PopularSellersDataResponse>,
+    private val onItemClicked: () -> Unit
+    ) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularViewHolder {
         val binding = CustomPopularLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,6 +24,9 @@ class PopularAdapter(private var sellers: List<PopularSellersDataResponse>) : Re
     override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {
         val item = sellers[position]
         holder.bind(item)
+        holder.itemView.setOnClickListener{
+            onItemClicked()
+        }
     }
 
     inner class PopularViewHolder(private val binding: CustomPopularLayoutBinding) : RecyclerView.ViewHolder(binding.root){

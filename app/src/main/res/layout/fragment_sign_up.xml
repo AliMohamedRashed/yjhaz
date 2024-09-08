@@ -242,7 +242,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fragment_signup_btn_signup"
-                style="@style/button_style"
+                style="@style/login_signup_btn"
                 android:letterSpacing="0.0001"
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/_54sdp"

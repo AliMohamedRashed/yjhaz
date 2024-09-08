@@ -144,7 +144,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fragment_login_btn_log_in"
-                style="@style/button_style"
+                style="@style/login_signup_btn"
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="@dimen/_54sdp"
                 android:layout_marginTop="@dimen/_55sdp"

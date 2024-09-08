@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".feature.payment.presentation.PaymentFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_12sdp">
+
+        <!-- Screen title -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_payment_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/select_payment_methods"
+            android:fontFamily="@font/tt_commons_regular"
+            android:letterSpacing="0.0001"
+            android:textColor="@color/upper_fields_color"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Horizontal GridLayout for payment method selection -->
+        <GridLayout
+            android:id="@+id/fragment_payment_grid_selection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:alignmentMode="alignMargins"
+            android:useDefaultMargins="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_tv_title">
+
+            <LinearLayout
+                android:id="@+id/fragment_payment_ll_cash"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="start|center"
+                android:background="@drawable/custom_payment_background_unselected"
+                android:padding="@dimen/_8sdp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/fragment_payment_iv_cash_icon"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:src="@drawable/ic_cash"
+                        android:contentDescription="@string/todo" />
+
+                    <ImageView
+                        android:id="@+id/fragment_payment_iv_cash_selected_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:src="@drawable/ic_selected"
+                        android:contentDescription="@string/todo2" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tt_commons_regular"
+                    android:text="@string/mobile_cash"
+                    android:textColor="@color/upper_fields_color"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/fragment_payment_tv_cash_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tt_commons_regular"
+                    android:gravity="center"
+                    android:text="@string/mobile_cash"
+                    android:textColor="@color/lower_fields_color"
+                    android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck,TextContrastCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_payment_ll_code"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_90sdp"
+                android:orientation="vertical"
+                android:gravity="start|center"
+                android:layout_columnWeight="1"
+                android:background="@drawable/custom_payment_background_unselected"
+                android:padding="@dimen/_8sdp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/fragment_payment_iv_code_icon"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:src="@drawable/ic_code"
+                        android:contentDescription="@string/todo3" />
+
+                    <ImageView
+                        android:id="@+id/fragment_payment_iv_code_selected_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:src="@drawable/ic_selected"
+                        android:contentDescription="@string/todo4" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tt_commons_regular"
+                    android:text="@string/charge_by_code"
+                    android:textColor="@color/upper_fields_color"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/fragment_payment_tv_code_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/get_code_from_the_center"
+                    android:textColor="@color/lower_fields_color"
+                    android:textSize="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck,TextContrastCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_payment_ll_fawry"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="start|center"
+                android:background="@drawable/custom_payment_background_unselected"
+                android:padding="@dimen/_8sdp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/fragment_payment_iv_fawry_icon"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:src="@drawable/ic_fawry"
+                        tools:ignore="ImageContrastCheck"
+                        android:contentDescription="@string/todo5" />
+
+                    <ImageView
+                        android:id="@+id/fragment_payment_iv_fawry_selected_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:src="@drawable/ic_selected"
+                        android:contentDescription="@string/todo6" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tt_commons_regular"
+                    android:text="@string/fawry"
+                    android:textColor="@color/upper_fields_color"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold"
+                    tools:ignore="TextSizeCheck" />
+            </LinearLayout>
+
+        </GridLayout>
+
+        <View
+            android:id="@+id/fragment_payment_view_details_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_25sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_grid_selection"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <!-- mobile cash method details impl -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_payment_tv_details_cash_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/send_an_amount_to_one_of_the_following_numbers"
+            android:fontFamily="@font/tt_commons_regular"
+            android:letterSpacing="0.0001"
+            android:textColor="@color/upper_fields_color"
+            android:textSize="@dimen/_15ssp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toTopOf="@+id/fragment_payment_view_details_container" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_payment_tv_details_cash_phone_one"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_35sdp"
+            android:fontFamily="@font/tt_commons_regular"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:letterSpacing="0.0001"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/phone_number_one"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="@dimen/_15ssp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_tv_details_cash_instructions"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_tv_details_cash_instructions" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_payment_tv_details_cash_phone_two"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_35sdp"
+            android:fontFamily="@font/tt_commons_regular"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:letterSpacing="0.0001"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/phone_number_two"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="@dimen/_15ssp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_tv_details_cash_phone_one"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_tv_details_cash_phone_one" />
+        <ImageView
+            android:id="@+id/fragment_payment_iv_cash_copy_one"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:src="@drawable/ic_whats"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toTopOf="@+id/fragment_payment_tv_details_cash_phone_one"
+            android:contentDescription="@string/todo8" />
+        <ImageView
+            android:id="@+id/fragment_payment_iv_cash_copy_two"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:src="@drawable/ic_copy"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toTopOf="@+id/fragment_payment_tv_details_cash_phone_two"
+            android:contentDescription="@string/todo9" />
+
+        <!-- Code method details impl -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_payment_tv_details_code_inform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/enter_the_code_obtained_from_elkhedewy_center"
+            android:fontFamily="@font/tt_commons_regular"
+            android:letterSpacing="0.0001"
+            android:textColor="@color/upper_fields_color"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toTopOf="@+id/fragment_payment_view_details_container" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_payment_tv_details_code_instructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/tt_commons_regular"
+            android:letterSpacing="0.0001"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/charge_by_code_description"
+            android:textColor="@color/forgot_password_color"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_tv_details_code_inform" />
+        <EditText
+            android:id="@+id/fragment_payment_et_code"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:background="@drawable/custom_edit_text_input"
+            android:backgroundTint="@color/search_hint_color"
+            android:ems="10"
+            android:fontFamily="@font/tt_commons_regular"
+            android:hint="@string/add_code"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="@dimen/_13sdp"
+            android:textColorHint="@color/forgot_password_color"
+            android:textFontWeight="300"
+            android:textSize="@dimen/_16sdp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_tv_details_code_instructions"
+            android:autofillHints="" />
+        <ImageView
+            android:id="@+id/fragment_payment_iv_qrcodescan"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@color/search_hint_color"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:src="@drawable/ic_qrcode"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toTopOf="@+id/fragment_payment_et_code"
+            android:contentDescription="@string/todo7" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_payment_btn_details_code"
+            style="@style/chart_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            android:letterSpacing="0.0001"
+            android:text="@string/charge"
+            android:textAllCaps="true"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_et_code" />
+
+        <!-- Fawry method details impl -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_payment_tv_details_fawry_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/enter_the_value_to_recharge"
+            android:fontFamily="@font/tt_commons_regular"
+            android:letterSpacing="0.0001"
+            android:textColor="@color/upper_fields_color"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toTopOf="@+id/fragment_payment_view_details_container" />
+        <EditText
+            android:id="@+id/fragment_payment_et_details_fawry_recharge_value"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/custom_edit_text_input"
+            android:backgroundTint="@color/search_hint_color"
+            android:ems="10"
+            android:fontFamily="@font/tt_commons_regular"
+            android:hint="@string/value"
+            android:inputType="number"
+            android:padding="@dimen/_13sdp"
+            android:maxLines="1"
+            android:textColorHint="@color/forgot_password_color"
+            android:textFontWeight="300"
+            android:textSize="@dimen/_16sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_tv_details_fawry_instructions"
+            android:autofillHints="" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_payment_btn_details_fawry"
+            style="@style/confirm_charge_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_45sdp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.0001"
+            android:text="@string/confirm_recharge"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintStart_toStartOf="@+id/fragment_payment_view_details_container"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_payment_et_details_fawry_recharge_value" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

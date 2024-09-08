@@ -19,4 +19,32 @@
     <string name="write_your_password_again">Write your password again</string>
 
     <string name="greeting_message">Hello %1$s</string>
+    <string name="rewind_button_desc">rewind button\n</string>
+    <string name="play_button_desc">play button\n</string>
+    <string name="forward_button_desc">forward button\n</string>
+    <string name="fullscreen_button_desc">fullscreen button\n</string>
+    <string name="charge_by_code_description">Make payment to Elkhedewy Center and get a mod or QR code or scan the QR directly to recharge the balance</string>
+    <string name="mobile_cash">Mobile Cash</string>
+    <string name="charge_by_code">Charge By Code</string>
+    <string name="fawry">Fawry</string>
+    <string name="charge">charge</string>
+    <string name="confirm_recharge">confirm recharge</string>
+    <string name="add_code">Add Code</string>
+    <string name="value">Value</string>
+    <string name="todo">TODO</string>
+    <string name="todo2">TODO</string>
+    <string name="todo3">TODO</string>
+    <string name="get_code_from_the_center">Get code from the center</string>
+    <string name="send_an_amount_to_one_of_the_following_numbers">Send an amount to one of the following numbers</string>
+    <string name="enter_the_code_obtained_from_elkhedewy_center">Enter the code obtained from Elkhedewy Center</string>
+    <string name="enter_the_value_to_recharge">Enter the value to recharge</string>
+    <string name="select_payment_methods">Select Payment Methods</string>
+    <string name="todo4">TODO</string>
+    <string name="todo5">TODO</string>
+    <string name="todo6">TODO</string>
+    <string name="todo7">TODO</string>
+    <string name="todo8">TODO</string>
+    <string name="todo9">TODO</string>
+    <string name="phone_number_one">01148650400</string>
+    <string name="phone_number_two">01126396578</string>
 </resources>

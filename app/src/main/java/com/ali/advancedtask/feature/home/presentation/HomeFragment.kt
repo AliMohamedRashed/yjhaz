@@ -31,6 +31,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
     @Inject
     lateinit var userHandler: UserHandler
+
     @Inject
     lateinit var storageHandler: StorageHandler
 
@@ -69,7 +70,7 @@ class HomeFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.fragmentHomeRvTrending.adapter = trendingAdapter
 
-        popularAdapter = PopularAdapter(emptyList())
+        popularAdapter = PopularAdapter(emptyList()){}
         binding.fragmentHomeRvPopular.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.fragmentHomeRvPopular.adapter = popularAdapter
@@ -83,24 +84,30 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             homeViewModel.state.collect { state ->
                 when (state) {
-                    is State.Loading -> binding.fragmentHomeProgressBar.visibility =  View.VISIBLE
+                    is State.Loading -> binding.fragmentHomeProgressBar.visibility = View.VISIBLE
                     is State.Success -> {
                         binding.fragmentHomeProgressBar.visibility = View.GONE
                         if (state.data.baseCategoriesResponseDto.success && state.data.popularSellersResponseDto.success && state.data.trendingSellersResponseDto.success) {
                             categoriesAdapter = CategoryAdapter(state.data.baseCategoriesResponseDto.data!!)
                             binding.fragmentHomeRvCategory.adapter = categoriesAdapter
-                            popularAdapter = PopularAdapter(state.data.popularSellersResponseDto.data)
+                            popularAdapter = PopularAdapter(state.data.popularSellersResponseDto.data) {
+                                    val action = HomeFragmentDirections.actionHomeFragmentToAdFragment() // Navigate without arguments
+                                    mNavController.navigate(action)
+                                }
                             binding.fragmentHomeRvPopular.adapter = popularAdapter
-                            trendingAdapter = TrendingAdapter(state.data.trendingSellersResponseDto.data)
+                            trendingAdapter =
+                                TrendingAdapter(state.data.trendingSellersResponseDto.data)
                             binding.fragmentHomeRvTrending.adapter = trendingAdapter
-                        } else{
+                        } else {
                             MainActivity.showToast("Error!")
                         }
                     }
+
                     is State.Error -> {
                         binding.fragmentHomeProgressBar.visibility = View.GONE
                         MainActivity.showToast(state.exception.message ?: "An error occurred")
                     }
+
                     null -> binding.fragmentHomeProgressBar.visibility = View.GONE
                 }
 

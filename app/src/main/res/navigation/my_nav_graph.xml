@@ -38,5 +38,22 @@
         <action
             android:id="@+id/action_homeFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_adFragment"
+            app:destination="@id/adFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/adFragment"
+        android:name="com.ali.advancedtask.feature.ad.presentation.AdFragment"
+        android:label="fragment_ad"
+        tools:layout="@layout/fragment_ad" >
+        <action
+            android:id="@+id/action_adFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.ali.advancedtask.feature.payment.presentation.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" />
 </navigation>

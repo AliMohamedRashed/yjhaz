@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".feature.ad.presentation.AdFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/fragment_ad_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_ad_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:fontFamily="@font/tt_commons_regular"
+            android:letterSpacing="0.0001"
+            android:textColor="@color/upper_fields_color"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/fragment_ad_playerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_16sdp"
+            app:controller_layout_id="@layout/custom_player_controller_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_ad_tv_title"
+            app:use_controller="true" />
+
+        <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_ad_tv_ad_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
+        android:padding="@dimen/_8sdp"
+        android:fontFamily="@font/tt_commons_regular"
+        android:gravity="center"
+        android:letterSpacing="0.0001"
+        android:textColor="@color/upper_fields_color"
+        android:textSize="@dimen/_18ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_ad_playerView"
+        app:layout_constraintStart_toStartOf="@+id/fragment_ad_playerView"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_ad_playerView"
+            tools:ignore="HardcodedText,VisualLintBounds" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/fragment_ad_tv_ad_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/tt_commons_regular"
+            android:gravity="center"
+            android:letterSpacing="0.0001"
+            android:padding="@dimen/_8sdp"
+            android:textColor="@color/upper_fields_color"
+            android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_ad_tv_ad_title"
+            tools:ignore="HardcodedText,VisualLintBounds" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_ad_btn"
+            style="@style/login_signup_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_54sdp"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:letterSpacing="0.0001"
+            android:text="Payment"
+            android:textSize="@dimen/_17sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_ad_tv_ad_text"
+            tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,TextSizeCheck,VisualLintBounds,VisualLintButtonSize" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
