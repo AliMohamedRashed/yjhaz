@@ -55,36 +55,25 @@ class PaymentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.fragmentPaymentLlCash.setOnClickListener {
-            updateSelection(binding.fragmentPaymentLlCash)
-            showCheckIcon(CASH)
-            showDetails(CASH)
-        }
+        observeToastMessage()
 
-        binding.fragmentPaymentLlCode.setOnClickListener {
-            updateSelection(binding.fragmentPaymentLlCode)
-            showCheckIcon(CODE)
-            showDetails(CODE)
-        }
+        paymentCashSelectionPressed()
+        paymentCodeSelectionPressed()
+        paymentFawrySelectionPressed()
 
-        binding.fragmentPaymentLlFawry.setOnClickListener {
-            updateSelection(binding.fragmentPaymentLlFawry)
-            showCheckIcon(FAWRY)
-            showDetails(FAWRY)
-        }
+        whatsAppIconPressed()
+        copyIconPressed()
+        qrCodeIconPressed()
+        fawryPaymentButtonPressed()
+    }
 
-        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
-            MainActivity.showToast(message)
+    private fun fawryPaymentButtonPressed(){
+        binding.fragmentPaymentBtnDetailsFawry.setOnClickListener {
+            viewModel.openFawrySdk(requireActivity())
         }
+    }
 
-        binding.fragmentPaymentIvCashCopyOne.setOnClickListener {
-            viewModel.openWhatsApp(requireContext(), binding.fragmentPaymentTvDetailsCashPhoneOne.text.toString())
-        }
-
-        binding.fragmentPaymentIvCashCopyTwo.setOnClickListener {
-            viewModel.copyToClipboard(requireContext(), binding.fragmentPaymentTvDetailsCashPhoneTwo.text.toString())
-        }
-
+    private fun qrCodeIconPressed(){
         binding.fragmentPaymentIvQrcodescan.setOnClickListener {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 startQrScan()
@@ -92,11 +81,46 @@ class PaymentFragment : Fragment() {
                 requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }
+    }
 
-        binding.fragmentPaymentBtnDetailsFawry.setOnClickListener {
-            viewModel.openFawrySdk(requireActivity())
+    private fun whatsAppIconPressed(){
+        binding.fragmentPaymentIvCashWhats.setOnClickListener {
+            viewModel.openWhatsApp(requireContext(), binding.fragmentPaymentTvDetailsCashPhoneOne.text.toString())
+        }
+    }
+    private fun copyIconPressed(){
+        binding.fragmentPaymentIvCashCopy.setOnClickListener {
+            viewModel.copyToClipboard(requireContext(), binding.fragmentPaymentTvDetailsCashPhoneTwo.text.toString())
         }
 
+    }
+
+    private fun observeToastMessage(){
+        viewModel.toastMessage.observe(viewLifecycleOwner) { message ->
+            MainActivity.showToast(message)
+        }
+    }
+
+    private fun paymentCashSelectionPressed(){
+        binding.fragmentPaymentLlCash.setOnClickListener {
+            updateSelection(binding.fragmentPaymentLlCash)
+            showCheckIcon(CASH)
+            showDetails(CASH)
+        }
+    }
+    private fun paymentCodeSelectionPressed(){
+        binding.fragmentPaymentLlCode.setOnClickListener {
+            updateSelection(binding.fragmentPaymentLlCode)
+            showCheckIcon(CODE)
+            showDetails(CODE)
+        }
+    }
+    private fun paymentFawrySelectionPressed(){
+        binding.fragmentPaymentLlFawry.setOnClickListener {
+            updateSelection(binding.fragmentPaymentLlFawry)
+            showCheckIcon(FAWRY)
+            showDetails(FAWRY)
+        }
     }
 
     private fun startQrScan() {
@@ -139,8 +163,8 @@ class PaymentFragment : Fragment() {
                 binding.fragmentPaymentTvDetailsCashInstructions.visibility = View.VISIBLE
                 binding.fragmentPaymentTvDetailsCashPhoneOne.visibility = View.VISIBLE
                 binding.fragmentPaymentTvDetailsCashPhoneTwo.visibility = View.VISIBLE
-                binding.fragmentPaymentIvCashCopyOne.visibility = View.VISIBLE
-                binding.fragmentPaymentIvCashCopyTwo.visibility = View.VISIBLE
+                binding.fragmentPaymentIvCashWhats.visibility = View.VISIBLE
+                binding.fragmentPaymentIvCashCopy.visibility = View.VISIBLE
                 //Disable Code Fields
                 binding.fragmentPaymentTvDetailsCodeInform.visibility = View.GONE
                 binding.fragmentPaymentTvDetailsCodeInstructions.visibility = View.GONE
@@ -162,8 +186,8 @@ class PaymentFragment : Fragment() {
                 binding.fragmentPaymentTvDetailsCashInstructions.visibility = View.GONE
                 binding.fragmentPaymentTvDetailsCashPhoneOne.visibility = View.GONE
                 binding.fragmentPaymentTvDetailsCashPhoneTwo.visibility = View.GONE
-                binding.fragmentPaymentIvCashCopyOne.visibility = View.GONE
-                binding.fragmentPaymentIvCashCopyTwo.visibility = View.GONE
+                binding.fragmentPaymentIvCashWhats.visibility = View.GONE
+                binding.fragmentPaymentIvCashCopy.visibility = View.GONE
                 //Disable Fawry Fields
                 binding.fragmentPaymentTvDetailsFawryInstructions.visibility = View.GONE
                 binding.fragmentPaymentEtDetailsFawryRechargeValue.visibility = View.GONE
@@ -177,8 +201,8 @@ class PaymentFragment : Fragment() {
                 binding.fragmentPaymentTvDetailsCashInstructions.visibility = View.GONE
                 binding.fragmentPaymentTvDetailsCashPhoneOne.visibility = View.GONE
                 binding.fragmentPaymentTvDetailsCashPhoneTwo.visibility = View.GONE
-                binding.fragmentPaymentIvCashCopyOne.visibility = View.GONE
-                binding.fragmentPaymentIvCashCopyTwo.visibility = View.GONE
+                binding.fragmentPaymentIvCashWhats.visibility = View.GONE
+                binding.fragmentPaymentIvCashCopy.visibility = View.GONE
                 //Disable Code Fields
                 binding.fragmentPaymentTvDetailsCodeInform.visibility = View.GONE
                 binding.fragmentPaymentTvDetailsCodeInstructions.visibility = View.GONE

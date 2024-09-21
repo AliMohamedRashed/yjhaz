@@ -1,5 +1,6 @@
 package com.ali.advancedtask.feature.ad.presentation
 
+import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -48,10 +49,23 @@ class AdFragment : Fragment() {
 
         mNavController = findNavController()
 
-        player = ExoPlayer.Builder(requireContext()).build().apply {
-            binding.fragmentAdPlayerView.player = this
-        }
+        initializingPlayer()
 
+        observeViewModelState()
+
+        setupPlayerControls()
+
+        onNavigateToPaymentFragmentBtnPressed()
+    }
+
+    private fun onNavigateToPaymentFragmentBtnPressed(){
+        binding.fragmentAdBtn.setOnClickListener {
+            val action = AdFragmentDirections.actionAdFragmentToPaymentFragment()
+            mNavController.navigate(action)
+        }
+    }
+
+    private fun observeViewModelState(){
         lifecycleScope.launch {
             adViewModel.state.collect { state ->
                 when (state) {
@@ -71,14 +85,12 @@ class AdFragment : Fragment() {
                 }
             }
         }
+    }
 
-        setupPlayerControls()
-
-        binding.fragmentAdBtn.setOnClickListener {
-            val action = AdFragmentDirections.actionAdFragmentToPaymentFragment()
-            mNavController.navigate(action)
+    private fun initializingPlayer(){
+        player = ExoPlayer.Builder(requireContext()).build().apply {
+            binding.fragmentAdPlayerView.player = this
         }
-
     }
 
     private fun setupMediaPlayer(videoUrl: String) {
@@ -128,6 +140,7 @@ class AdFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     private fun enterFullscreen() {
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         updateFullscreenUI(true)
